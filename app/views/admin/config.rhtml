@@ -1,0 +1,31 @@
+<% @title = "DedaWiki Site Configuration" %>
+
+<%= error_messages_for 'user' %>
+<%= error_messages_for 'siteinfo' %>
+
+<% form_for :siteinfo, @siteinfo, :url => { :action => "config_update" } do |f| %>
+
+  <p>
+    <label for="siteinfo_name">Site name</label><br/>
+    <%= f.text_field(:name) %>
+  </p>
+
+  <p>
+    <label for="siteinfo_tagline">Site tagline</label><br/>
+    <%= f.text_field(:tagline) %>
+  </p>
+
+  <p>
+    <label for="siteinfo_email">Automatically sent email comes from
+    this address</label><br/>
+    <%= f.text_field(:email) %>
+  </p>
+
+  <p>
+    <label for="siteinfo_template">Default template</label><br/>
+    <small>This is the default template for new pages.</small><br/>
+    <%= f.text_area(:template) %>
+  </p>
+
+<%= submit_tag("Save setup") %>
+<% end %>

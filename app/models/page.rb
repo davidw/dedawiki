@@ -13,7 +13,9 @@ class Page < ActiveRecord::Base
 
   def local_links(txt)
     # Grab [[foo bar]] style things and turn them into valid markdown.
-    return txt.gsub(/\[\[([^\]]+)\]\]/) {|s| "[#{$1}](/page/show/#{ERB::Util.url_encode($1)})"}
+    return txt.gsub(/\[\[([^\]]+)\]\]/) { |s|
+      "[#{$1}](/page/show/#{ERB::Util.url_encode($1)})"
+    }
   end
 
 end

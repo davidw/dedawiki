@@ -9,10 +9,18 @@ class AdminController < ApplicationController
   def index
   end
 
-  def add
+  def config
+    @siteinfo = Siteinfo.main
   end
 
-  def create
+  def config_update
+    @siteinfo = Siteinfo.main
+    if !@siteinfo.update_attributes(params[:siteinfo])
+      render :action => 'config'
+      return
+    end
+    flash[:notice] = "Site configuration updated"
+    redirect_to :action => 'index'
   end
 
   def delete

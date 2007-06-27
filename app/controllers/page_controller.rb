@@ -1,5 +1,7 @@
 class PageController < ApplicationController
 
+  caches_page :show
+
   include Differ
 
   def index
@@ -16,9 +18,9 @@ class PageController < ApplicationController
       return
     end
 
-    @page = Page.find(:first, :conditions => ['title = ?', params[:title]])
+    @page = Page.find(:first, :conditions => ['title = ?', title_param])
     if @page.nil?
-      redirect_to :action => 'create', :title => params[:title]
+      redirect_to :action => 'create', :title => title_param
       return
     end
 
@@ -40,8 +42,16 @@ class PageController < ApplicationController
     render :action => 'show'
   end
 
+  def dynamicshow
+    show
+  end
+
+  def lgn
+    render :layout => false
+  end
+
   def create
-    @page = Page.new(:title => params[:title])
+    @page = Page.new(:title => title_param)
   end
 
   def newpage
@@ -52,7 +62,7 @@ class PageController < ApplicationController
       flash[:notice] = "#{@page.title} saved"
 
     end
-    redirect_to(:action => 'show', :title => @page.title)
+    redirect_to(:action => 'dynamicshow', :title => @page.title)
   end
 
   # Show recently updated pages
@@ -67,14 +77,14 @@ class PageController < ApplicationController
   end
 
   def refer
-    @page_title = params[:title]
+    @page_title = title_param
     @pages = Page.find(:all,
                        :conditions => ['content like ?', "%[[#{@page_title}]]%"])
   end
 
   # Get revision history for a page.
   def history
-    @page = Page.find_by_title(params[:title])
+    @page = Page.find_by_title(title_param)
     if params[:revision].nil?
       @revision = @page.revisions.length
     else
@@ -91,7 +101,7 @@ class PageController < ApplicationController
   def history_diff
     @title = "DedaWiki Page Revision Differences"
 
-    @page = Page.find_by_title(params[:title])
+    @page = Page.find_by_title(title_param)
     @old = params[:older].to_i
     @new = params[:newer].to_i
 
@@ -120,20 +130,28 @@ class PageController < ApplicationController
   end
 
   def edit
-    @page = Page.find_by_title(params[:title])
+    @page = Page.find_by_title(title_param)
     if @page.content.nil?
       @page.content = Siteinfo.main.template
     end
   end
 
   def update
+    # Add nasty anti spam things...
+    if Spammer.find_by_ip(request.remote_ip)
+      redirect_to("http://#{request.remote_ip}")
+      return
+    end
 
-    @page = Page.find_by_title(params[:title])
+    @page = Page.find_by_title(title_param)
+
+    expire_page(:controller => 'page', :action => 'show', :title => @page.title)
+
     if @page.update_attributes(params[:page])
       add_revision(current_user, @page, request.remote_ip,
                    params[:revision][:comment])
       flash[:notice] = 'The page has been updated.'
-      redirect_to :action => 'show', :title => @page.title
+      redirect_to :action => 'dynamicshow', :title => @page.title
     else
       render :action => 'edit'
     end
@@ -146,6 +164,12 @@ class PageController < ApplicationController
     r.page = page
     r.comment = comment
     r.save!
+  end
+
+  def title_param
+    t = params[:title]
+    return t if t.class == String
+    return params[:title].join("/")
   end
 
 end

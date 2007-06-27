@@ -1,5 +1,10 @@
 <% @title = "DedaWiki Admin" -%>
 
+<h4>Configure site</h4>
+  <p>
+    <%= link_to("config", :action => 'config') -%>
+  </p>
+
 <h4>Delete a page</h4>
 <% form_remote_tag :update => 'deletemessages', :url => { :action => 'delete' } do %>
 <p>

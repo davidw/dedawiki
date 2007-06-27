@@ -1,4 +1,4 @@
-<% @title = "Creating page \"#{params[:title]}\"" %>
+<% @title = "Creating page \"#{@page.title}\"" %>
 
 <% form_tag :action => 'newpage', :title => @page.title do %>
   <%= render :partial => 'form' %>
