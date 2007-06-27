@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+      <title><%= @title -%></title>
+      <%= stylesheet_link_tag 'dedawiki' %>
+      <% unless @tab == "home" -%>
+        <%= javascript_include_tag :defaults %>
+      <% end -%>
+  </head>
+  <body id="<%= @tab -%>">
+
+    <div class="titlebar">
+      <a href="/"><%= image_tag('logo.png', :border => 0, :class => 'logo') -%></a>
+
+      <div class="login">
+	<%= login_status -%>
+      </div>
+      <div class="title">
+	<h1><%=h @title -%></h1>
+	<div class="tagline">
+	  <%= Siteinfo.main.tagline -%>
+	</div>
+      </div>
+    </div>
+    <div class="navbar">
+      <span id="homelink"><%= link_to_unless_current("Home", '/') -%></span>
+      <span id="recentlink"><%= link_to_unless_current("Recent Updates", :controller => 'page', :action => 'recent') -%></span>
+      <span id="aboutlink"><%= link_to_unless_current("About", :controller => 'page', :action => 'show', :title => 'About') -%></span>
+    </div>
+
+    <div class="ads">
+
+      <div align="center">
+	<script type="text/javascript"><!--
+	  google_ad_client = "pub-5440322766006443";
+	  google_ad_width = 728;
+	  google_ad_height = 15;
+	  google_ad_format = "728x15_0ads_al_s";
+	  google_ad_channel = "";
+	  //--></script>
+	<script type="text/javascript"
+	  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+	</script>
+      </div>
+
+    </div>
+
+    <% unless flash[:notice].nil? %>
+    <fieldset><legend>Message:</legend>
+      <%= flash[:notice] %>
+    </fieldset>
+    <% end %>
+
+    <%= yield  %>
+
+    <hr style="clear: both; visibility: hidden;">
+    <div class="bottomnav">
+      <%= link_to_unless_current("Home", "/") -%> |
+      <%= link_to_unless_current("Recent Updates", :controller => 'page', :action => 'recent') -%> |
+      <%= link_to_unless_current("About", :controller => 'page', :action => 'show', :title => 'About') -%>
+      <br/>
+      Powered by <%= link_to("DedaWiki<br/>" + image_tag('tiny_logo.png', :border => 0), 'http://rubyforge.org/projects/dedawiki/') -%><br/>
+      Copyright &copy; 2007 <a href="http://www.dedasys.com">DedaSys LLC</a><br/>
+    </div>
+
+  </body>
+</html>

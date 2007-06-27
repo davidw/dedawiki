@@ -1,0 +1,43 @@
+<% @title = Siteinfo.main.name + " user " + @user.login %>
+
+  <h2>User Login: <%= @user.login -%></h2>
+
+  <div>
+    <div id="aboutme">
+      <%= render :partial => 'aboutme' %>
+
+      <% if logged_in? && @user.login == current_user.login -%>
+      <div id="changepass">
+	<%= render :partial => 'changepass' %>
+      </div>
+      <% end %>
+    </div>
+
+    <div class="contributed">
+      <h4><%= @user.login -%> participated in creating these pages</h4>
+      <ul>
+	<% @user.pages.uniq.each do |p| -%>
+	<li><%= page_link(p) -%></li>
+        <% end -%>
+      </ul>
+    </div>
+
+    <div class="userscomments">
+      <h4><%=h @user.login -%>'s latest comments</h4>
+      <% @comments.each do |c| %>
+      <p>
+	<span style="color: #333; font-size: smaller;">
+
+	  Page: <%= page_link(c.page) -%>
+	  <%= time_ago_in_words(c.created_at) -%> ago<br/>
+	</span>
+	<%= maruku(c.body) %>
+      </p>
+      <% end %>
+    </div>
+
+  </div>
+
+
+
+

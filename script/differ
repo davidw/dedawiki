@@ -1,0 +1,40 @@
+#!/usr/bin/env ruby
+
+ENV['RAILS_ENV'] = ARGV.first || ENV['RAILS_ENV'] || 'development'
+
+require File.dirname(__FILE__) + '/../config/boot'
+require "#{RAILS_ROOT}/config/environment"
+require 'console_app'
+require 'maruku'
+require "#{RAILS_ROOT}/lib/differ.rb"
+
+include Differ
+
+$DEBUG = true
+
+Page.find(:all).each do |page|
+  revrev = page.revisions.reverse
+  revrev.each_index do |i|
+    puts i
+
+    unless revrev[i].addchars.nil? || revrev[i].addchars.nil?
+      next
+    end
+
+    puts revrev[i].created_at
+    if i == 0
+      oldcontent = ""
+    else
+      oldcontent = revrev[i-1].content
+    end
+
+    newcontent = revrev[i].content
+
+    diff = DifferClass.new(Maruku.new(oldcontent).to_html,
+                           Maruku.new(newcontent).to_html)
+    revrev[i].addchars = diff.added
+    revrev[i].delchars = diff.deleted
+    revrev[i].save!
+    diff = nil
+  end
+end

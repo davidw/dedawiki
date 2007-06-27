@@ -1,0 +1,8 @@
+<% @title = "Creating page \"#{params[:title]}\"" %>
+
+<% form_tag :action => 'newpage', :title => @page.title do %>
+  <%= render :partial => 'form' %>
+<p>
+  <%= submit_tag(' Save Changes ') -%>&nbsp;&nbsp;&nbsp;&nbsp;<%= link_to('Cancel Edit', :action => 'show', :title => @page.title)-%>
+</p>
+<% end %>

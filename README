@@ -1,0 +1,15 @@
+== DedaWiki
+
+I created DedaWiki in a serious bout of "NIH" (Not Invented Here)
+which came to a head when I kept running into problems getting Instiki
+to work.
+
+DedaWiki is my vision of what a wiki ought to be like, and was created
+with the express purpose of hosting a site of mine,
+http://www.leenooks.com.
+
+It is distributed under the very liberal Apache Software License,
+which means that you have the right to integrate this code into
+proprietary applications if you so desire.
+
+-- David N. Welton <davidw@dedasys.com>, June 26th, 2007

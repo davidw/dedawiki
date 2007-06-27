@@ -1,0 +1,360 @@
+pre {
+  background-color: #eee;
+  padding: 10px;
+  font-size: 11px;
+}
+
+.fieldWithErrors {
+  padding: 2px;
+  background-color: red;
+  display: table;
+}
+
+#errorExplanation {
+  width: 400px;
+  border: 2px solid red;
+  padding: 7px;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+}
+
+#errorExplanation h2 {
+  text-align: left;
+  font-weight: bold;
+  padding: 5px 5px 5px 15px;
+  font-size: 12px;
+  margin: -7px;
+  background-color: #c00;
+  color: #fff;
+}
+
+#errorExplanation p {
+  color: #333;
+  margin-bottom: 0;
+  padding: 5px;
+}
+
+#errorExplanation ul li {
+  font-size: 12px;
+  list-style: square;
+}
+
+div.uploadStatus {
+  margin: 5px;
+}
+
+div.progressBar {
+  margin: 5px;
+}
+
+div.progressBar div.border {
+  background-color: #fff;
+  border: 1px solid grey;
+  width: 100%;
+}
+
+div.progressBar div.background {
+  background-color: #333;
+  height: 18px;
+  width: 0%;
+}
+
+body {
+    background-color: #fff;
+    color: #333;
+}
+
+a {
+    color: #293d6b;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+a:visited {
+    color: #313f6d;
+    font-weight: normal;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+body, ol, ul, td {
+    font-family: verdana, arial, helvetica, sans-serif;
+    font-size:   13px;
+    line-height: 18px;
+}
+
+p {
+    padding-left: 1ex;
+    margin-left: 1em;
+    margin-right: 20%;
+}
+
+blockquote {
+    width: 80%;
+}
+
+img.logo {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.title {
+    text-align: center;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div.titlebar {
+    padding: 1ex;
+    color: #283c64;
+    height: 90px;
+}
+
+div.titlebar h1 {
+    width: 60%;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1ex;
+}
+
+.tagline {
+    color: black;
+    font-weight: bold;
+    font-variant: small-caps;
+}
+
+div.login {
+    padding: 4px;
+    background-color: #dddddd;
+    position: relative;
+    float: right;
+    top: 10px;
+    right: 10px;
+}
+
+div.navbar {
+    background-image: url(/images/navbar.png);
+    height: 22px;
+    margin-top: 20px;
+    padding-top: 16px;
+    padding-left: 50px;
+    color: #293d6b;
+    margin-left: 200px;
+    margin-right: 200px;
+}
+
+.navbar span {
+    padding-left: 1ex;
+    padding-right: 1ex;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.navbar span a:visited { font-weight: bold; }
+
+#home #homelink, #search #searchlink, #contribute #contributelink, #about #aboutlink, #recent #recentlink {
+    background-color: #ffffff;
+    padding-bottom: 3px;
+}
+
+div.markdownhelp {
+    float: right;
+}
+
+div.pageedit {
+    width: 50%;
+    margin: 1em;
+    padding: 1ex;
+}
+
+label {
+    font-weight: bold;
+}
+
+div.categories {
+    background-color: #aaddff;
+}
+
+#aboutme {
+    float: left;
+    width: 40%;
+}
+
+.contributed {
+    float: right;
+    width: 60%;
+}
+
+.userscomments {
+    float: right;
+    width: 60%;
+}
+
+div.ads {
+    width: 730;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1ex;
+}
+
+table.markdownhelp td {
+    padding-right: 1em;
+}
+
+h4 {
+    margin-left: 1em;
+    color: #226622;
+}
+
+.editlink {
+    float: left;
+    text-align: center;
+    background-color: #ffc;
+    width: 200px;
+    margin-left: 1em;
+    margin-right: auto;
+    margin-top: -2px;
+    border-bottom: 1px solid blue;
+    border-left: 1px solid blue;
+    border-right: 1px solid blue;
+    border-top: 1px solid white;
+    margin-bottom: 1ex;
+}
+
+.referlink {
+    float: left;
+    text-align: center;
+    background-color: #ffc;
+    width: 200px;
+    margin-left: 100px;
+    margin-right: auto;
+    margin-top: -2px;
+    border-bottom: 1px solid blue;
+    border-left: 1px solid blue;
+    border-right: 1px solid blue;
+    border-top: 1px solid white;
+    margin-bottom: 1ex;
+}
+
+.revisioninfo {
+    float: right;
+    text-align: center;
+    background-color: #ffc;
+    width: 300px;
+    margin-left: auto;
+    margin-right: 1em;
+    margin-top: -2px;
+    border-bottom: 1px solid blue;
+    border-left: 1px solid blue;
+    border-right: 1px solid blue;
+    border-top: 1px solid white;
+    margin-bottom: 1ex;
+}
+
+textarea {
+    border: 2px solid gray;
+}
+
+fieldset {
+    width: 50%;
+}
+
+fieldset legend {
+    font-weight: bold;
+}
+
+.commentbox {
+    margin-left: 2em;
+    margin-right: 2em;
+    padding: 1ex;
+    border: 1px solid red;
+}
+
+.comment {
+    margin-top: 1ex;
+    margin-bottom: 1.5ex;
+}
+
+.latest {
+    width: 45%;
+    float: left;
+}
+
+.latestcomments {
+    margin-left: 1em;
+    width: 45%;
+    float: right;
+}
+
+.highlight {
+    background-color: #ffc;
+}
+
+.bottomnav {
+    font-size: smaller;
+    text-align: center;
+    width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1ex;
+    padding-right: 1ex;
+    background-color: #ddffdd;
+}
+
+div.wikipage {
+    border: 1px solid blue;
+    background-color: #ffffff;
+    padding: 1ex;
+    margin: 1em;
+    margin-bottom: 0;
+}
+
+.wikipage p, .wikipage ul {
+    font-family: verdana, arial, helvetica, sans-serif;
+}
+
+.wikipage h1 {
+    color: #222255;
+    font-size: 16pt;
+    font-variant: small-caps;
+}
+.wikipage h2 {
+    color: #222288;
+    font-size: 14pt;
+    font-variant: small-caps;
+}
+.wikipage h3 {
+    color: #2222bb;
+    font-size: 12pt;
+    font-variant: small-caps;
+}
+.wikipage h4 {
+    color: #2222ee;
+    font-size: 10pt;
+    font-variant: small-caps;
+}
+
+div.ins {
+    background-color: #ccffcc;
+}
+
+div.del {
+    text-decoration: line-through;
+    background-color: #ffcccc;
+}
+
+span.ins {
+    background-color: #ccffcc;
+}
+
+span.del {
+    text-decoration: line-through;
+    background-color: #ffcccc;
+}

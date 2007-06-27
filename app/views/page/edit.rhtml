@@ -1,0 +1,12 @@
+<% @title = "Edit Page" %>
+
+<h2>Edit: <%=h @page.title -%></h2>
+
+<% form_tag :action => 'update', :title => @page.title do %>
+  <%= render :partial => 'form' %>
+<p>
+  <%= submit_tag ' Save Changes ' -%>&nbsp;&nbsp;&nbsp;&nbsp;<%= link_to('Cancel Edit', :action => 'show', :title => @page.title) -%>
+</p>
+<% end %>
+
+

@@ -1,0 +1,1 @@
+page.replace_html("reply#{@parent_id}", render(:partial => 'reply'))

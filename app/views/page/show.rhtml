@@ -1,0 +1,35 @@
+<% @title = @page.title %>
+<% @title = Siteinfo.main.name if @page.title == "Home" %>
+<% @tab = "home" if @page.title == "Home" %>
+<% @tab = "about" if @page.title == "About" %>
+
+  <!-- google_ad_section_start -->
+  <div class="wikipage">
+    <%= @page.content_html %>
+    <hr style="clear: both; visibility: hidden;">
+  </div>
+  <!-- google_ad_section_end -->
+
+  <div class="editlink">
+  <%= link_to('Edit this page', :action => 'edit', :title => @page.title) -%>
+  </div>
+
+  <div class="referlink">
+  <%= link_to('What links here?', :action => 'refer', :title => @page.title) -%>
+  </div>
+
+  <div class="revisioninfo">
+    <strong>Revision:</strong> #<%= @page.revisions.length %> -
+    <%= link_to "View page edit history", :action => 'history', :title => @page.title %>
+  </div>
+
+ <hr style="clear: both; visibility: hidden;">
+
+ <div class="commentbox">
+    <h4 align="center">Comments</h4>
+
+    <%= render :partial => '/comment/comments' %>
+ </div>
+
+  <hr style="clear: both; visibility: hidden;">
+

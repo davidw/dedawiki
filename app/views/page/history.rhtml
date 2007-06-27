@@ -1,0 +1,34 @@
+<% @title = "Revision history for #{@page.title}" %>
+
+<h2>Revision #<%= @revision -%></h2>
+<h3><%=h @page.title -%></h3>
+
+  <div class="wikipage">
+    <%= maruku(@revision_content) %>
+  </div>
+
+<ul>
+<% i = @page.revisions.length %>
+<% @page.revisions.each do |r| %>
+<% rev = @page.revisions.reverse[i - 1] %>
+<li>
+<%= link_to("##{i}", :id => @page, :revision => i) %>
+      - <%= rev.updated_at.to_s -%>
+      - <%= user_link(rev.user) -%>
+<% unless rev.comment.nil? -%>
+<br/><small><%= rev.comment -%></small>
+<% end %>
+</li>
+
+  <li style="margin-left: 2em;">
+      <%= link_to("changes from version #{i - 1} to #{i}", :action => 'history_diff',
+                  :title => @page.title, :newer => i, :older => i - 1) %>
+  </li>
+
+<% i -= 1 %>
+<% end %>
+</ul>
+
+<p>
+Return to <%= page_link(@page) %>
+</p>

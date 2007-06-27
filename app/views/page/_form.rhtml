@@ -1,0 +1,33 @@
+<%= error_messages_for 'page' %>
+
+  <!--[form:page]-->
+    <% unless logged_in? -%>
+    <p>
+      <strong>You are not logged in</strong>.  That's ok - you can
+      edit a page anonymously - but we'd like to encourage you to <a
+      href="/account/signup">sign up</a> or <a
+      href="/account/login">log in</a>.
+    </p>
+    <% end %>
+
+  <div>
+    <div class="markdownhelp">
+      <%= render :partial => 'markdown' %>
+    </div>
+
+   <div class="pageedit">
+
+     <label for="page_content">Title</label><br/>
+      <%= text_field 'page', 'title' %>
+   </div>
+
+     <label for="page_content">Contents</label><br/>
+      <%= text_area 'page', 'content', 'cols' => 80, 'rows' => 30 %>
+   </div>
+  </div>
+
+  <p>
+    <label for="revision_comment">Describe your changes</label><br/>
+      <%= text_field 'revision', 'comment', :size => 70 %>
+  </p>
+  <!--[eoform:page]-->

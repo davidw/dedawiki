@@ -1,0 +1,12 @@
+<% @title = "DedaWiki Admin" -%>
+
+<h4>Delete a page</h4>
+<% form_remote_tag :update => 'deletemessages', :url => { :action => 'delete' } do %>
+<p>
+<label for="delete_id">Page ID:</label><br/>
+<%= text_field_tag("delete_id", nil, :size => 4) -%>
+<%= submit_tag("Delete it") -%>
+</p>
+<% end %>
+
+  <div id="deletemessages"></div>

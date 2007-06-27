@@ -1,0 +1,18 @@
+<% if logged_in? -%>
+<%= link_to_remote("Add Comment",
+                   :url => { :controller => 'comment', :action => 'reply',
+                             :page => @page.id, :indent => 0 }) -%>
+<% else %>
+  <strong>Log in/sign up to leave a comment or reply to comments</strong>
+<% end %>
+
+
+<div id="reply"></div>
+
+<% @comment_indent = 0 %>
+<% @page.comments.select { |c| c.parent_id.nil? }.each do |c| -%>
+<%= render(:partial => '/comment/comment', :locals => {:c => c}) %>
+<% end %>
+
+<div id="replylast"></div>
+

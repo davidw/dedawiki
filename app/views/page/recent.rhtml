@@ -1,0 +1,21 @@
+<% @title = "Recently Updated Pages" %>
+<% @tab = "recent" %>
+
+  <h4>Recently Updated Pages</h4>
+
+  <div style="float: right; margin-right: 1em; width: 25ex; border: 1px dashed blue; padding: 5px;">
+  <a href="/page/recent_atom" title="Recently updated pages feed"
+    rel="alternate" type="application/atom+xml">
+      <img src="/images/feed.png" alt=""
+	style="border:0; float: left; margin-right: 1em;"/>
+	Recently updated pages feed</a>
+  </div>
+
+<ul>
+<% @revisions.each do |r| %>
+    <li style="margin-bottom: 7px;">
+      <%= page_link(r.page) -%><br/>
+	<small><%= user_link(r.user) -%> - <%= r.created_at -%></small>
+    </li>
+<% end %>
+<ul>

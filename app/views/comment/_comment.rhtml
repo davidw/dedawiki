@@ -1,0 +1,32 @@
+<% commentid = "comment#{c.id}" -%>
+<div id="<%= commentid -%>" class="comment" style="margin-left: <%= (@comment_indent * 2).to_s + 'ex' -%>">
+<span style="color: #333; font-size: smaller;">
+<%= link_to(c.user.login, :controller => 'userpages', :action => 'show', :id => c.user.id) -%>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<%= time_ago_in_words(c.created_at) -%> ago
+</span>
+<br/>
+
+<%= maruku(c.body) -%>
+<% repid = "reply#{c.id}" -%>
+<br/>
+<% if logged_in? -%>
+<%= link_to_remote("Reply", :url => { :controller => 'comment', :action => 'reply',
+                     :parent => c.id, :page => @page.id, :indent => @comment_indent + 1 }) -%>
+<% end -%>
+
+<% if c.created_at > 2.days.ago && c.user == current_user -%>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<%= link_to_remote("Edit", :update => commentid,
+                   :url => { :controller => 'comment', :action => 'edit',
+                             :id => c.id, :indent => @comment_indent }) -%>
+<% end -%>
+
+<div id="<%= repid -%>"></div>
+
+<% @comment_indent += 1 -%>
+<% c.children.each do |child| -%>
+  <%= render(:partial => '/comment/comment', :locals => {:c => child}) %>
+<% end -%>
+<% @comment_indent -= 1 -%>
+</div>

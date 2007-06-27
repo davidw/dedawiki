@@ -1,0 +1,15 @@
+  <h4>Latest Comments</h4>
+
+<% @comments.each do |c| %>
+
+  <div style="margin-bottom: 1em;">
+    <span style="color: #333;">
+
+      <%= user_link(c.user) -%> wrote, regarding
+      <%= page_link(c.page) -%>:
+      <br/>
+    </span>
+    <%= maruku(c.body) %>
+  </div>
+
+  <% end %>

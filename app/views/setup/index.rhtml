@@ -1,0 +1,60 @@
+<h2>DedaWiki Setup</h2>
+
+<%= error_messages_for 'user' %>
+<%= error_messages_for 'siteinfo' %>
+
+  <p>Before you start using your new wiki, there are a few things you
+  need to set up:</p>
+
+  <h1>1</h1>
+  <p>Create a user:</p>
+
+<% form_tag('/setup/setup') do %>
+  <p>
+    <label for="user_login">Admin user login</label><br/>
+    <%= text_field(:user, :login) %>
+  </p>
+
+  <p>
+  <label for="user_email">Admin user email</label><br/>
+  <%= text_field(:user, :email) %>
+
+    <p><label for="user_password">Password</label><br/>
+    <%= password_field(:user, :password) %>
+    </p>
+
+<p><label for="user_password_confirmation">Confirm Password</label><br/>
+<%= password_field(:user, :password_confirmation) %>
+</p>
+
+
+  <h1>2</h1>
+  <p>Configure the site:<br/>
+    <small>Don't worry, you can change all these options later!</small>
+  </p>
+
+  <p>
+    <label for="siteinfo_name">Site name</label><br/>
+    <%= text_field(:siteinfo, :name) %>
+  </p>
+
+  <p>
+    <label for="siteinfo_tagline">Site tagline</label><br/>
+    <%= text_field(:siteinfo, :tagline) %>
+  </p>
+
+  <p>
+    <label for="siteinfo_email">Automatically sent email comes from
+    this address</label><br/>
+    <%= text_field(:siteinfo, :email) %>
+  </p>
+
+  <p>
+    <label for="siteinfo_template">Default template</label><br/>
+    <small>This is the default template for new pages.</small><br/>
+    <%= text_area(:siteinfo, :template) %>
+  </p>
+
+
+<%= submit_tag("Complete setup") %>
+<% end %>

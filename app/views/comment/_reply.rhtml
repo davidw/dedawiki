@@ -1,0 +1,13 @@
+<% remote_form_for(:comment, @comment,
+                   :url => { :controller => 'comment', :action => 'create',
+                     :page => @page.id, :parent => @parent_id, :indent => @comment_indent }) do |f| %>
+<label for="comment_body">Comment:</label><br/>
+<%= f.text_area('body', :rows => 20, :cols => 80) %>
+<br/>
+<%= submit_tag ' Send ' -%>&nbsp;&nbsp;&nbsp;&nbsp;
+<%= link_to_remote('Cancel', :update => "reply#{@parent_id}",
+      :url => {:controller => 'comment', :action => 'cancel_reply'}) -%>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="#" onclick="markdownpopup(); return false;">Formatting help</a>
+
+<% end %>

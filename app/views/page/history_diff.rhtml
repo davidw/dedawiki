@@ -1,0 +1,22 @@
+<h2>Page: <%=h @page.title %></h2>
+<h4>Differences between revision <%= @old -%> and <%= @new -%> </h4>
+
+<p>
+<% if current_user.admin? %>
+<%= link_to("Roll back to version #{@old}", :controller => 'admin',
+            :action => 'rollback', :id => @page.id, :old => @old) %>
+<% end %>
+</p>
+
+<small>
+<div style="margin-left: 2em; width: 20ex;" class="del">DELETED TEXT</div>
+<div style="margin-left: 2em; width: 20ex;" class="ins">ADDED TEXT</div>
+</small>
+
+<div class="wikipage">
+<%= @diff %>
+</div>
+
+<p>
+<%= link_to("Back to #{@page.title} page history", :action => 'history', :title => @page.title) %>
+</p>

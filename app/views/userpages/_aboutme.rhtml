@@ -1,0 +1,23 @@
+  <h4><%= @user.login %> on <%=h Siteinfo.main.name -%></h4>
+
+  <p>
+    <label>Name:</label><br/>
+    <%=h @user.name -%>
+  </p>
+  <p>
+    <label>URL:</label><br/>
+    <% unless @user.myurl.nil? -%>
+    <%= link_to(h(@user.myurl), @user.myurl) -%>
+    <% end %>
+  </p>
+
+  <p>
+    <label>Description/About:</label>
+  </p>
+  <p style="background-color: #eee; padding: 1ex; width:50%;"><%=h @user.aboutme %></p>
+
+  <% if logged_in? && @user.login == current_user.login -%>
+<ul>
+<li><%= link_to_remote("Edit the above information", :update => 'aboutme', :url => {:action => 'editinfo'}) -%></li>
+</ul>
+  <% end -%>

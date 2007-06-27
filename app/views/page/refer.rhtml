@@ -1,0 +1,15 @@
+<% @title = "Pages that refer to #{@page_title}" %>
+
+  <p>
+    Return to <%= link_to(@page_title, :action => 'show', :title => @page_title) -%>
+  </p>
+
+  <% if @pages.length == 0 %>
+  <strong>Nothing links here!</strong>
+<% else %>
+  <ul>
+    <% @pages.each do |p| -%>
+      <li><%= link_to(p.title, :action => 'show', :title => p.title) -%></li>
+    <% end -%>
+  </ul>
+<% end %>

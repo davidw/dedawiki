@@ -1,0 +1,26 @@
+xml.instruct!
+
+xml.feed "xmlns" => "http://www.w3.org/2005/Atom" do
+
+  xml.title   Siteinfo.main.name + " recent updates"
+  xml.link    "rel" => "self", "href" => url_for(:only_path => false, :controller => 'page', :action => 'recent_atom')
+  xml.link    "rel" => "alternate", "href" => url_for(:only_path => false, :controller => 'page', :action => 'recent')
+  xml.id      url_for(:only_path => false, :controller => 'page', :action => 'recent')
+  xml.updated @revisions.first.created_at.strftime "%Y-%m-%dT%H:%M:%SZ" if @revisions.any?
+  xml.author  { xml.name Siteinfo.main.name }
+
+  @revisions.each do |r|
+
+    xml.entry do
+      xml.title   r.page.title
+      xml.link    "rel" => "alternate", "href" => url_for(:only_path => false, :controller => 'page', :action => 'show', :title => r.page.title)
+      xml.id      url_for(:only_path => false, :controller => 'page', :action => 'show', :title => r.page.title, :revision => r.id)
+      xml.updated r.created_at.strftime "%Y-%m-%dT%H:%M:%SZ"
+      xml.author  { xml.name r.user.login }
+      xml.content "type" => "html" do
+        xml.text! r.page.content_html.to_s
+      end
+    end
+  end
+
+end

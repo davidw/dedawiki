@@ -1,0 +1,8 @@
+if @parent_id.nil?
+  @parent_id = "last"
+  page.replace_html('reply', '')
+  page.insert_html(:before, 'replylast',
+                   render(:partial => '/comment/comment', :locals => {:c => @comment}))
+else
+  page.replace("reply#{@parent_id}", render(:partial => '/comment/comment', :locals => {:c => @comment}))
+end
