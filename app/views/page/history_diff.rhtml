@@ -2,7 +2,7 @@
 <h4>Differences between revision <%= @old -%> and <%= @new -%> </h4>
 
 <p>
-<% if current_user.admin? %>
+<% if logged_in? && current_user.admin? %>
 <%= link_to("Roll back to version #{@old}", :controller => 'admin',
             :action => 'rollback', :id => @page.id, :old => @old) %>
 <% end %>

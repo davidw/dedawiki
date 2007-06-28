@@ -12,7 +12,7 @@
 <% @page.revisions.each do |r| %>
 <% rev = @page.revisions.reverse[i - 1] %>
 <li>
-<%= link_to("##{i}", :id => @page, :revision => i) %>
+<%= link_to("##{i}", :title => @page.title, :revision => i) %>
       - <%= rev.updated_at.to_s -%>
       - <%= user_link(rev.user) -%>
 <% unless rev.comment.nil? -%>
