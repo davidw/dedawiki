@@ -1,3 +1,4 @@
-UserMailer#welcome
+Welcome to this installation of DedaWiki.
 
-Find me in app/views/user_mailer/welcome.rhtml
+Please replace this text with something specific to your site if
+you're going to use it.

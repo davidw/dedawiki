@@ -1,9 +1,5 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-one:
+main:
   id: 1
-  name: MyString
-  tagline: MyString
-two:
-  id: 2
-  name: MyString
-  tagline: MyString
+  name: DedaWiki
+  tagline: DedaWiki Tagline

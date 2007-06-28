@@ -1,0 +1,9 @@
+p1:
+  id: 1
+  title: Home
+  content: DedaWiki Home Page
+
+p2:
+  id: 2
+  title: About
+  content: DedaWiki About Page
