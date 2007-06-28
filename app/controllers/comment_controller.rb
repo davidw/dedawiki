@@ -3,6 +3,13 @@ class CommentController < ApplicationController
   before_filter :comment_login
   cache_sweeper :comment_sweeper, :only => [:create, :update]
 
+  # Called initially when a user replies or creates a new comment.
+  def reply
+    @page = Page.find(params[:page])
+    @parent_id = params[:parent]
+    @comment_indent = params[:indent]
+  end
+
   def create
     @comment = Comment.new(params[:comment])
     @page = Page.find(params[:page])
@@ -16,12 +23,6 @@ class CommentController < ApplicationController
     else
       flash[:notice] = "Error creating new comment"
     end
-  end
-
-  def reply
-    @page = Page.find(params[:page])
-    @parent_id = params[:parent]
-    @comment_indent = params[:indent]
   end
 
   def edit

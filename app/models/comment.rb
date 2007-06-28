@@ -5,6 +5,4 @@ class Comment < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :page
-
-  after_create :mail_model
 end
