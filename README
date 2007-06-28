@@ -12,4 +12,16 @@ It is distributed under the very liberal Apache Software License,
 which means that you have the right to integrate this code into
 proprietary applications if you so desire.
 
+== Installation
+
+  1. Create a database (dedawiki_production, for example), and
+     configure config/database.yml to point to it.
+
+  2. Go to http://YOURSITE/setup to configure the site and initial
+     user, who is also the site admin.
+
+== Information
+
+For more information, go to http://dedawiki.dedasys.com/
+
 -- David N. Welton <davidw@dedasys.com>, June 26th, 2007
