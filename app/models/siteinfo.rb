@@ -8,7 +8,7 @@ class Siteinfo < ActiveRecord::Base
     return @@cached unless @@cached.nil?
     @@cached = Siteinfo.find(:first)
     if @@cached.nil?
-      @@cached = Siteinfo.new(:name => "Need to configure this", :tagline => 'no tagline yet')
+      return Siteinfo.new(:name => "Need to configure this", :tagline => 'no tagline yet')
     end
     return @@cached
   end
