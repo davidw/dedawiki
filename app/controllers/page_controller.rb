@@ -2,6 +2,9 @@ class PageController < ApplicationController
 
   caches_page :show
 
+  before_filter :check_for_empty_title, :only => [:history, :history_diff, :refer,
+                                                  :create, :edit, :update, :dynamicshow]
+
   include Differ
 
   def index
@@ -17,6 +20,8 @@ class PageController < ApplicationController
       redirect_to :controller => 'setup', :action => 'index'
       return
     end
+
+    redirect_to('/') if params[:title].nil? || params[:title].length == 0
 
     @page = Page.find(:first, :conditions => ['title = ?', title_param])
     if @page.nil?
@@ -164,6 +169,13 @@ class PageController < ApplicationController
     r.page = page
     r.comment = comment
     r.save!
+  end
+
+  def check_for_empty_title
+    if params[:title].nil? || params[:title].length == 0
+      redirect_to('/')
+      return false
+    end
   end
 
   def title_param
