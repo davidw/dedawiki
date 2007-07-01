@@ -21,7 +21,10 @@ class PageController < ApplicationController
       return
     end
 
-    redirect_to('/') if params[:title].nil? || params[:title].length == 0
+    if params[:title].nil? || params[:title].length == 0
+      redirect_to('/')
+      return
+    end
 
     @page = Page.find(:first, :conditions => ['title = ?', title_param])
     if @page.nil?
