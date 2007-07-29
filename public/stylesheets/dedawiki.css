@@ -168,6 +168,10 @@ div.navbar {
     font-weight: bold;
 }
 
+.searchresults {
+    margin-left: 200px;
+}
+
 #home #homelink, #search #searchlink, #contribute #contributelink, #about #aboutlink, #recent #recentlink {
     background-color: #ffffff;
     padding-bottom: 3px;
