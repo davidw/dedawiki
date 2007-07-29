@@ -137,6 +137,7 @@ class PageController < ApplicationController
     end
   end
 
+  # Edit a page.
   def edit
     @page = Page.find_by_title(title_param)
     if @page.content.nil?
@@ -144,6 +145,7 @@ class PageController < ApplicationController
     end
   end
 
+  # Update a page with a new edit.
   def update
     # Add nasty anti spam things...
     if Spammer.find_by_ip(request.remote_ip)
@@ -163,6 +165,14 @@ class PageController < ApplicationController
     else
       render :action => 'edit'
     end
+  end
+
+  # Return results for search.
+  def searchresults
+    q = params[:q] || ""
+    @results = Page.find(:all, :conditions =>
+                         ["lower(title) like lower(?)", "%" + q + "%"],
+                         :order => 'title')
   end
 
   private

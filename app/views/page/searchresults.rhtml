@@ -1,0 +1,11 @@
+<% @title = "DedaWiki search results for: #{params[:q]}" %>
+
+<% if @results.length > 0 %>
+<ul class="searchresults">
+<% @results.each do |r| %>
+  <li><%= page_link(r) -%></li>
+<% end %>
+</ul>
+<% else %>
+<strong>No results found for "<%= params[:q] -%>"</strong>
+<% end %>

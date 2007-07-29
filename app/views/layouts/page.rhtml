@@ -23,9 +23,13 @@
       </div>
     </div>
     <div class="navbar">
+      <%= form_tag('/page/searchresults') -%>
       <span id="homelink"><%= link_to_unless_current("Home", '/') -%></span>
       <span id="recentlink"><%= link_to_unless_current("Recent Updates", :controller => 'page', :action => 'recent') -%></span>
       <span id="aboutlink"><%= link_to_unless_current("About", :controller => 'page', :action => 'show', :title => 'About') -%></span>
+             <%= text_field_tag('q', nil, { :length => 25, :id => 'searchfield' }) -%>
+      <%= submit_tag("Search", { :id => 'searchbutton' } ) -%>
+      <%= end_form_tag %>
     </div>
 
     <div class="ads">

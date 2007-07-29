@@ -146,7 +146,7 @@ div.navbar {
     padding-left: 50px;
     color: #293d6b;
     margin-left: 200px;
-    margin-right: 200px;
+    margin-right: 100px;
 }
 
 .navbar span {
@@ -157,6 +157,16 @@ div.navbar {
 }
 
 .navbar span a:visited { font-weight: bold; }
+
+#searchbutton {
+    font-weight: bold;
+}
+
+#searchfield {
+    border-style: dashed;
+    margin-left: 150px;
+    font-weight: bold;
+}
 
 #home #homelink, #search #searchlink, #contribute #contributelink, #about #aboutlink, #recent #recentlink {
     background-color: #ffffff;
