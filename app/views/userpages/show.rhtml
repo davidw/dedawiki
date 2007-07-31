@@ -31,7 +31,7 @@
 	  Page: <%= page_link(c.page) -%>
 	  <%= time_ago_in_words(c.created_at) -%> ago<br/>
 	</span>
-	<%= maruku(c.body) %>
+	<%= maruku(c.content) %>
       </p>
       <% end %>
     </div>
