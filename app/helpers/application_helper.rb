@@ -20,7 +20,7 @@ module ApplicationHelper
   end
 
   def page_link(page)
-    return link_to("#{page.title}", :action => 'show',
+    return link_to("#{page.title}", :controller => 'page', :action => 'show',
                    :title => page.title)
   end
 
