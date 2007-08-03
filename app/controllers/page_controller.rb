@@ -96,6 +96,7 @@ class PageController < ApplicationController
     if @page.nil?
       render(:file => "#{RAILS_ROOT}/public/404.html",
              :status => '404 Not Found')
+      return
     end
 
     if params[:revision].nil?
@@ -118,6 +119,7 @@ class PageController < ApplicationController
     if @page.nil?
       render(:file => "#{RAILS_ROOT}/public/404.html",
              :status => '404 Not Found')
+      return
     end
 
     @old = params[:older].to_i
