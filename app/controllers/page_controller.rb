@@ -93,6 +93,11 @@ class PageController < ApplicationController
   # Get revision history for a page.
   def history
     @page = Page.find_by_title(title_param)
+    if @page.nil?
+      render(:file => "#{RAILS_ROOT}/public/404.html",
+             :status => '404 Not Found')
+    end
+
     if params[:revision].nil?
       @revision = @page.revisions.length
     else
@@ -110,6 +115,11 @@ class PageController < ApplicationController
     @title = "DedaWiki Page Revision Differences"
 
     @page = Page.find_by_title(title_param)
+    if @page.nil?
+      render(:file => "#{RAILS_ROOT}/public/404.html",
+             :status => '404 Not Found')
+    end
+
     @old = params[:older].to_i
     @new = params[:newer].to_i
 
