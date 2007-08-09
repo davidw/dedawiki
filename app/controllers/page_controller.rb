@@ -59,10 +59,22 @@ class PageController < ApplicationController
   end
 
   def create
+    @page = Page.find(:first, :conditions => ['title = ?', title_param])
+    if !@page.nil?
+      redirect_to :action => 'show', :title => @page.title
+      return
+    end
+
     @page = Page.new(:title => title_param)
   end
 
   def newpage
+    @page = Page.find(:first, :conditions => ['title = ?', title_param])
+    if !@page.nil?
+      redirect_to :action => 'show', :title => @page.title
+      return
+    end
+
     @page = Page.new(params[:page])
     if @page.save
       add_revision(current_user, @page, request.remote_ip,
