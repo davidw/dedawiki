@@ -159,8 +159,17 @@ class PageController < ApplicationController
 
   # Update a page with a new edit.
   def update
+
+    # Some spammers try and leave big long comments in their updates.
+    # Catch them.
+    spammer = nil
+    if params[:revision] && params[:revision][:comment] && params[:revision][:comment].length > 250
+      spammer = Spammer.new(:ip => request.remote_ip)
+      spammer.save
+    end
+
     # Add nasty anti spam things...
-    if Spammer.find_by_ip(request.remote_ip)
+    if !spammer.nil? || Spammer.find_by_ip(request.remote_ip)
       redirect_to("http://#{request.remote_ip}")
       return
     end
