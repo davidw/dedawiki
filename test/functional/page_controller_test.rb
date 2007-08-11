@@ -44,6 +44,25 @@ class PageControllerTest < Test::Unit::TestCase
     assert_equal num_pages, Page.count
   end
 
+  def test_create_existing_page
+    num_pages = Page.count
+
+    post :create, :title => 'Home'
+
+    assert_response :redirect
+    assert_redirected_to :action => 'show', :title => 'Home'
+  end
+
+  def test_newpage_existing_page
+    num_pages = Page.count
+
+    post(:newpage, :page => {:content => 'fiddle with home page', :title => 'Home'},
+         :revision => {:comment => 'created new home page'})
+
+    assert_response :redirect
+    assert_redirected_to :action => 'show', :title => 'Home'
+  end
+
   def test_newpage
     num_pages = Page.count
 
@@ -64,6 +83,13 @@ class PageControllerTest < Test::Unit::TestCase
 
     assert_not_nil assigns(:page)
     assert assigns(:page).valid?
+  end
+
+  def test_edit_of_nonexistant_page
+    get :edit, :title => 'WiggleWaggle'
+
+    assert_response :redirect
+    assert_redirected_to :action => 'show', :title => 'Home'
   end
 
   def test_update

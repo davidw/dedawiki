@@ -23,6 +23,8 @@ class AdminController < ApplicationController
     redirect_to :action => 'index'
   end
 
+  # This needs to be improved - culling revisions as well as the page,
+  # and accepting a title.
   def delete
     begin
       @page = Page.find(params[:delete_id])

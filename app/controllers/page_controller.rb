@@ -1,11 +1,16 @@
 class PageController < ApplicationController
 
+  include Differ
+
   caches_page :show
 
-  before_filter :check_for_empty_title, :only => [:history, :history_diff, :refer,
-                                                  :create, :edit, :update, :dynamicshow]
+  # These methods must not be called with an empty title.
+  before_filter(:check_for_empty_title,
+                :only => [:history, :history_diff, :refer,
+                          :create, :edit, :update, :dynamicshow])
 
-  include Differ
+  # These methods must be called with a title that does *not* exist.
+  before_filter :page_doesnt_exist, :only => [:create, :newpage]
 
   def index
     show
@@ -15,6 +20,7 @@ class PageController < ApplicationController
   verify :method => :post, :only => [ :destroy, :update ],
          :redirect_to => { :action => :index }
 
+  # This shows the page in question.
   def show
     if !Siteinfo.setup?
       redirect_to :controller => 'setup', :action => 'index'
@@ -50,31 +56,26 @@ class PageController < ApplicationController
     render :action => 'show'
   end
 
+  # This exists to get around the cache when updating/editing/creating
+  # pages.
   def dynamicshow
     show
   end
 
+  # Called via javascript to dynamically fill in the login div in the
+  # upper right corner.  It's less work to only do that dynamically
+  # rather than create the whole page.
   def lgn
-    render :layout => false
+    render(:layout => false)
   end
 
+  # Starts the creation of a new page.
   def create
-    @page = Page.find(:first, :conditions => ['title = ?', title_param])
-    if !@page.nil?
-      redirect_to :action => 'show', :title => @page.title
-      return
-    end
-
     @page = Page.new(:title => title_param)
   end
 
+  # Actually creates a new page.
   def newpage
-    @page = Page.find(:first, :conditions => ['title = ?', title_param])
-    if !@page.nil?
-      redirect_to :action => 'show', :title => @page.title
-      return
-    end
-
     @page = Page.new(params[:page])
     if @page.save
       add_revision(current_user, @page, request.remote_ip,
@@ -96,6 +97,7 @@ class PageController < ApplicationController
     render :layout => false
   end
 
+  # Shows all the pages that refer to the given page.
   def refer
     @page_title = title_param
     @pages = Page.find(:all,
@@ -164,6 +166,10 @@ class PageController < ApplicationController
   # Edit a page.
   def edit
     @page = Page.find_by_title(title_param)
+    if @page.nil?
+      redirect_to(:controller => 'page', :action => 'show', :title => 'Home')
+      return
+    end
     if @page.content.nil?
       @page.content = Siteinfo.main.template
     end
@@ -209,6 +215,8 @@ class PageController < ApplicationController
   end
 
   private
+
+  # Create a new revision and save it.
   def add_revision(user, page, ip, comment)
     r = Revision.new(:ip => ip, :content => page.content)
     r.user = user
@@ -217,6 +225,7 @@ class PageController < ApplicationController
     r.save!
   end
 
+  # Check and make sure the title isn't empty.
   def check_for_empty_title
     if params[:title].nil? || params[:title].length == 0
       redirect_to('/')
@@ -224,10 +233,24 @@ class PageController < ApplicationController
     end
   end
 
+  # Returns the :title param.
   def title_param
     t = params[:title]
+    return "" if t.nil?
     return t if t.class == String
     return params[:title].join("/")
   end
 
+  # Return false if the page *exists*
+  def page_doesnt_exist
+    title = title_param
+    if title == "" && params[:page] && params[:page][:title]
+      title = params[:page][:title]
+    end
+    page = Page.find(:first, :conditions => ['title = ?', title])
+    if !page.nil?
+      redirect_to :action => 'show', :title => page.title
+      return false
+    end
+  end
 end
