@@ -40,15 +40,6 @@ class AccountControllerTest < Test::Unit::TestCase
     end
   end
 
-  def test_should_require_password_on_signup
-    assert_no_difference User, :count do
-      create_user(:password => nil)
-      puts assigns(:user).errors.inspect
-      assert assigns(:user).errors.on(:password)
-      assert_response :success
-    end
-  end
-
   def test_should_require_password_confirmation_on_signup
     assert_no_difference User, :count do
       create_user(:password_confirmation => nil)

@@ -1,9 +1,9 @@
-p1:
+first:
   id: 1
   title: Home
   content: DedaWiki Home Page
 
-p2:
+second:
   id: 2
   title: About
   content: DedaWiki About Page

@@ -5,7 +5,7 @@ require 'page_controller'
 class PageController; def rescue_action(e) raise e end; end
 
 class PageControllerTest < Test::Unit::TestCase
-  fixtures :pages
+  fixtures :pages, :users
 
   def setup
     @controller = PageController.new
@@ -13,25 +13,19 @@ class PageControllerTest < Test::Unit::TestCase
     @response   = ActionController::TestResponse.new
 
     @first_id = pages(:first).id
+    siteinfo = Siteinfo.new(:name => "Test Wiki", :tagline => 'A wiki to test', :setup => true)
+    siteinfo.save
+
   end
 
   def test_index
     get :index
-    assert_response :success
-    assert_template 'list'
-  end
-
-  def test_list
-    get :list
-
-    assert_response :success
-    assert_template 'list'
-
-    assert_not_nil assigns(:pages)
+    assert_response :redirect
+    assert_redirected_to '/'
   end
 
   def test_show
-    get :show, :id => @first_id
+    get :show, :title => 'Home'
 
     assert_response :success
     assert_template 'show'
@@ -40,28 +34,30 @@ class PageControllerTest < Test::Unit::TestCase
     assert assigns(:page).valid?
   end
 
-  def test_new
-    get :new
-
-    assert_response :success
-    assert_template 'new'
-
-    assert_not_nil assigns(:page)
-  end
-
   def test_create
     num_pages = Page.count
 
-    post :create, :page => {}
+    post :create, :title => 'Newpage'
+
+    assert_response :success
+
+    assert_equal num_pages, Page.count
+  end
+
+  def test_newpage
+    num_pages = Page.count
+
+    post(:newpage, :page => {:content => 'a new page', :title => 'Newpage'},
+         :revision => {:comment => 'created new page'})
 
     assert_response :redirect
-    assert_redirected_to :action => 'list'
+    assert_redirected_to :action => 'dynamicshow', :title => 'Newpage'
 
     assert_equal num_pages + 1, Page.count
   end
 
   def test_edit
-    get :edit, :id => @first_id
+    get :edit, :title => 'Home'
 
     assert_response :success
     assert_template 'edit'
@@ -71,22 +67,10 @@ class PageControllerTest < Test::Unit::TestCase
   end
 
   def test_update
-    post :update, :id => @first_id
+    post(:update, :title => 'Home', :revision => {:comment => 'updated home'},
+         :page => {:content => 'new improved home'})
     assert_response :redirect
-    assert_redirected_to :action => 'show', :id => @first_id
+    assert_redirected_to :action => 'dynamicshow', :title => 'Home'
   end
 
-  def test_destroy
-    assert_nothing_raised {
-      Page.find(@first_id)
-    }
-
-    post :destroy, :id => @first_id
-    assert_response :redirect
-    assert_redirected_to :action => 'list'
-
-    assert_raise(ActiveRecord::RecordNotFound) {
-      Page.find(@first_id)
-    }
-  end
 end
