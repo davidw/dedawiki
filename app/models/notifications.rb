@@ -7,7 +7,7 @@ class Notifications < ActionMailer::Base
     si = Siteinfo.find :first
     name = si.name || "DedaWiki"
     @subject    = "#{si.name}: someone has posted to a discussion thread"
-    @body       = {:wikiname => name, :comment => comment, :page => comment.page}
+    @body       = {:wikiname => name, :comment => comment, :page => comment.page, :host => "dedawiki.dedasys.com"}
     @recipients = user.email
     @from       = Siteinfo.main.email
     @sent_on    = Time.now

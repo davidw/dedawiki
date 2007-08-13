@@ -7,7 +7,7 @@ on the <%=h @page.title -%> page:
 
 
 You can respond by visiting this URL:
-<%= url_for(:controller => 'page', :action => 'show', :title => @page.title) -%>
+<%= url_for(:only_path => false, :host => @host, :controller => 'page', :action => 'show', :title => @page.title) -%>
 
 -- 
 This message was automatically generated.
