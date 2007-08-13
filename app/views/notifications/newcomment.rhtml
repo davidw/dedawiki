@@ -1,0 +1,13 @@
+Hi,
+
+Someone has responded to a comment you left on the <%=h @wikiname -%> wiki,
+on the <%=h @page.title -%> page:
+
+    <%= @comment.content -%>
+
+
+You can respond by visiting this URL:
+<%= url_for(:controller => 'page', :action => 'show', :title => @page.title) -%>
+
+-- 
+This message was automatically generated.

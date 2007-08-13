@@ -3,13 +3,17 @@ class CommentController < ApplicationController
   before_filter :comment_login
   cache_sweeper :comment_sweeper, :only => [:create, :update]
 
+  observer :comment_observer
+
   # Called initially when a user replies or creates a new comment.
   def reply
     @page = Page.find(params[:page])
     @parent_id = params[:parent]
     @comment_indent = params[:indent]
+    @comment = Comment.new(:emailupdates => true)
   end
 
+  # Create a new comment.
   def create
     @comment = Comment.new(params[:comment])
     @page = Page.find(params[:page])
@@ -25,6 +29,7 @@ class CommentController < ApplicationController
     end
   end
 
+  # Edit an existing comment.
   def edit
     @comment = Comment.find(params[:id])
     @comment_indent = params[:indent]
@@ -41,6 +46,7 @@ class CommentController < ApplicationController
 
   end
 
+  # Do the actual update of a comment.
   def update
     @comment = Comment.find(params[:id])
     @comment_indent = params[:indent].to_i
@@ -57,6 +63,7 @@ class CommentController < ApplicationController
     end
   end
 
+  # Bail out from an edit.
   def cancel_edit
     @comment = Comment.find(params[:id])
     @parent_id = @comment.parent_id

@@ -1,5 +1,6 @@
 <% commentid = "comment#{c.id}" -%>
 <div id="<%= commentid -%>" class="comment" style="margin-left: <%= (@comment_indent * 2).to_s + 'ex' -%>">
+<div class="singlecomment">
 <span style="color: #333; font-size: smaller;">
 <%= link_to(c.user.login, :controller => 'userpages', :action => 'show', :id => c.user.id) -%>
 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -21,7 +22,7 @@
                    :url => { :controller => 'comment', :action => 'edit',
                              :id => c.id, :indent => @comment_indent }) -%>
 <% end -%>
-
+</div>
 <div id="<%= repid -%>"></div>
 
 <% @comment_indent += 1 -%>

@@ -4,6 +4,7 @@ one:
   content: "hello world"
   user_id: 1
   page_id: 1
+  emailupdates: 1
   created_at: <%= Time.now %>
   updated_at: <%= Time.now %>
 two:
@@ -12,5 +13,6 @@ two:
   user_id: 2
   page_id: 1
   parent_id: 1
+  emailupdates: 1
   created_at: <%= Time.now %>
   updated_at: <%= Time.now %>

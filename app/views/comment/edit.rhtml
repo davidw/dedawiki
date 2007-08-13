@@ -10,5 +10,6 @@
                :id => @comment.id, :indent => @comment_indent}) -%>
 &nbsp;&nbsp;&nbsp;&nbsp;
 <a href="#" onclick="markdownpopup(); return false;">Formatting help</a>
-
+&nbsp;&nbsp;&nbsp;&nbsp;
+<%= f.check_box('emailupdates') -%> Receive email notifying you of responses to this comment?
 <% end %>
