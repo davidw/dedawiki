@@ -3,8 +3,6 @@ class CommentController < ApplicationController
   before_filter :comment_login
   cache_sweeper :comment_sweeper, :only => [:create, :update]
 
-  observer :comment_observer
-
   # Called initially when a user replies or creates a new comment.
   def reply
     @page = Page.find(params[:page])
