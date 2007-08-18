@@ -7,7 +7,8 @@ class Notifications < ActionMailer::Base
     si = Siteinfo.find :first
     name = si.name || "DedaWiki"
     @subject    = "#{si.name}: someone has posted to a discussion thread"
-    @body       = {:wikiname => name, :comment => comment, :page => comment.page, :host => "dedawiki.dedasys.com"}
+    # The site domain variable comes from comment_controller's 'create' method.
+    @body       = {:wikiname => name, :comment => comment, :page => comment.page, :host => $SITE_DOMAIN}
     @recipients = user.email
     @from       = Siteinfo.main.email
     @sent_on    = Time.now

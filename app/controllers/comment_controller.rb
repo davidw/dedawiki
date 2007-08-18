@@ -13,6 +13,10 @@ class CommentController < ApplicationController
 
   # Create a new comment.
   def create
+    # Used in notifications.rb Kind of an ugly hack, but it's fast and
+    # direct.
+    $SITE_DOMAIN = request.domain
+
     @comment = Comment.new(params[:comment])
     @page = Page.find(params[:page])
     @comment.page = @page

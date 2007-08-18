@@ -5,7 +5,7 @@ require 'page_controller'
 class PageController; def rescue_action(e) raise e end; end
 
 class PageControllerTest < Test::Unit::TestCase
-  fixtures :pages, :users
+  fixtures :pages, :users, :revisions
 
   def setup
     @controller = PageController.new
@@ -97,6 +97,21 @@ class PageControllerTest < Test::Unit::TestCase
          :page => {:content => 'new improved home'})
     assert_response :redirect
     assert_redirected_to :action => 'dynamicshow', :title => 'Home'
+  end
+
+  def test_history
+    get(:history, :title => 'Home')
+    assert_response :success
+  end
+
+  def test_history_diff
+    get(:history_diff, :title => 'Home', :older => 0, :newer => 1)
+    assert_response :success
+  end
+
+  def test_history_diff_missing
+    get(:history_diff, :title => 'Home', :older => 10, :newer => 20)
+    assert_response :missing
   end
 
 end

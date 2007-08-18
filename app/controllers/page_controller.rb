@@ -139,8 +139,9 @@ class PageController < ApplicationController
     @old = params[:older].to_i
     @new = params[:newer].to_i
 
-    if @old > @page.revisions.length || @new < 0
-      redirect_to :action => 'history', :id => params[:id]
+    if @old > @page.revisions.length || @new < 0 || @new > @page.revisions.length
+      render(:file => "#{RAILS_ROOT}/public/404.html",
+             :status => '404 Not Found')
       return
     end
 
