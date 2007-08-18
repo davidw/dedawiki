@@ -73,13 +73,16 @@ class CommentController < ApplicationController
     @page = @comment.page
   end
 
+  # Called when a user has started a reply, then cancels.
   def cancel_reply
     render :text => ''
   end
 
   private
+
+  # Creates a popup error message.
   def comment_login
-    ajax_login_required("You need to be <a href=\"/account/login\">logged in</a> to do this")
+    ajax_login_required("Sorry, but you need to be logged in to write comments.")
   end
 
 end

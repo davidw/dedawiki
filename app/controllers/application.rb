@@ -10,7 +10,8 @@ class ApplicationController < ActionController::Base
 
   def ajax_login_required(rejected_text)
     if !logged_in?
-      render(:text => rejected_text)
+      @errtxt = rejected_text
+      render(:controller => 'comments', :action => 'reply_not_logged')
       return false
     end
     return true

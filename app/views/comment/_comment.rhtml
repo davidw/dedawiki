@@ -11,10 +11,8 @@
 <%= maruku(c.content) -%>
 <% repid = "reply#{c.id}" -%>
 <br/>
-<% if logged_in? -%>
 <%= link_to_remote("Reply", :url => { :controller => 'comment', :action => 'reply',
                      :parent => c.id, :page => @page.id, :indent => @comment_indent + 1 }) -%>
-<% end -%>
 
 <% if c.created_at > 2.days.ago && c.user == current_user -%>
 &nbsp;&nbsp;&nbsp;&nbsp;

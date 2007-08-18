@@ -1,11 +1,6 @@
-<% if logged_in? -%>
 <%= link_to_remote("Add Comment",
                    :url => { :controller => 'comment', :action => 'reply',
                              :page => @page.id, :indent => 0 }) -%>
-<% else %>
-  <strong>Log in/sign up to leave a comment or reply to comments</strong>
-<% end %>
-
 
 <div id="reply"></div>
 
