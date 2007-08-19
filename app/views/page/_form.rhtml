@@ -18,6 +18,7 @@
    <div class="pageedit">
 
      <label for="page_content">Title</label>: <strong><%= @page.title -%></strong>
+      <%= hidden_field('page', 'title') -%>
    </div>
 
      <label for="page_content">Contents</label><br/>
