@@ -22,6 +22,14 @@
   </p>
 
   <p>
+    <label for="siteinfo_frontpagecomments">Allow Comments on the
+    front page?</label><br/>
+    <small>If this is selected, there will be a comments box on the
+    front page, like on all the other pages.</small><br/>
+    <%= f.check_box(:frontpagecomments) %>
+  </p>
+
+  <p>
     <label for="siteinfo_template">Default template</label><br/>
     <small>This is the default template for new pages.</small><br/>
     <%= f.text_area(:template) %>

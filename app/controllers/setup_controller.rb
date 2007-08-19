@@ -3,9 +3,11 @@ class SetupController < ApplicationController
 
   layout 'page'
 
+  # Displays the initial setup page.
   def index
   end
 
+  # Performs initial setup.
   def setup
     @user = User.new(params[:user])
     @user.admin = true
@@ -25,6 +27,8 @@ class SetupController < ApplicationController
   end
 
   private
+
+  # Don't let people run setup once it's already been run.
   def only_setup_once
     if Siteinfo.setup? && current_user.login != Siteinfo.main.adminlogin
       redirect_to '/'

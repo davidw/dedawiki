@@ -2,7 +2,7 @@
 # migrations feature of ActiveRecord to incrementally modify your database, and
 # then regenerate this schema definition.
 
-ActiveRecord::Schema.define(:version => 23) do
+ActiveRecord::Schema.define(:version => 24) do
 
   create_table "comments", :force => true do |t|
     t.column "content",      :text
@@ -35,12 +35,13 @@ ActiveRecord::Schema.define(:version => 23) do
   end
 
   create_table "siteinfos", :force => true do |t|
-    t.column "name",       :string
-    t.column "tagline",    :string
-    t.column "template",   :text
-    t.column "adminlogin", :string
-    t.column "setup",      :boolean, :default => false
-    t.column "email",      :string
+    t.column "name",              :string
+    t.column "tagline",           :string
+    t.column "template",          :text
+    t.column "adminlogin",        :string
+    t.column "setup",             :boolean, :default => false
+    t.column "email",             :string
+    t.column "frontpagecomments", :boolean
   end
 
   create_table "spammers", :force => true do |t|

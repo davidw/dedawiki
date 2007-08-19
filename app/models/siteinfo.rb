@@ -33,4 +33,9 @@ class Siteinfo < ActiveRecord::Base
     si.save!
   end
 
+  # Are comments allowed on the front page?
+  def Siteinfo.frontpagecomments?
+    return Siteinfo.find(:first).frontpagecomments?
+  end
+
 end
