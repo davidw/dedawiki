@@ -25,7 +25,7 @@
 
  <hr style="clear: both; visibility: hidden;">
 
-<% if @title != "Home" || Siteinfo.frontpagecomments? -%>
+<% if @title != "Home" || (@title == "Home" && Siteinfo.frontpagecomments?) -%>
  <div class="commentbox">
     <h4 align="center">Comments</h4>
 
