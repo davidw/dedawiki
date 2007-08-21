@@ -17,4 +17,12 @@ class ApplicationController < ActionController::Base
     return true
   end
 
+  # Returns the :title param.
+  def title_param
+    t = params[:title]
+    return "" if t.nil?
+    return t if t.class == String
+    return params[:title].join("/")
+  end
+
 end

@@ -23,20 +23,28 @@ class AdminController < ApplicationController
     redirect_to :action => 'index'
   end
 
-  # This needs to be improved - culling revisions as well as the page,
-  # and accepting a title.
+  # Delete a page and all its revisions.
   def delete
-    begin
-      @page = Page.find(params[:delete_id])
-      @page.destroy
-    rescue => e
-      @errmsg = "Page not found"
-      render :action => 'error', :layout => false
-      return
-    end
-    render :layout => false
+    @page = Page.find_by_title(title_param)
+    @spammer = nil
+    @page.destroy
+    expire_page(:controller => 'page', :action => 'show', :title => @page.title)
   end
 
+  # Delete a page, all its revisions, and mark the author of the last
+  # revision a spammer.
+  def delete_spam
+    @page = Page.find_by_title(title_param)
+
+    @spammer = Spammer.new(:ip => @page.revisions[0].ip)
+    @spammer.save
+
+    @page.destroy
+    expire_page(:controller => 'page', :action => 'show', :title => @page.title)
+    render :action => 'delete'
+  end
+
+  # Roll back to an older version.
   def rollback
     @page = Page.find(params[:id])
     @good = params[:old].to_i
@@ -60,6 +68,8 @@ class AdminController < ApplicationController
   end
 
   private
+
+  # Make sure the user is an admin.
   def admin_login_required
     return false if !logged_in?
     return false if !current_user.admin?

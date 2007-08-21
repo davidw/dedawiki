@@ -1,2 +1,11 @@
-<strong>OK</strong><br/>
-<em><%= @page.title -%></em> deleted.
+<% @title = "DedaWiki Delete Page" %>
+
+  <p>
+    The page <strong><%=h @page.title %></strong> has been deleted.
+  </p>
+
+<% if !@spammer.nil? -%>
+  <p>
+    The IP address <%= @spammer.ip -%> has been added to the list of spammers.
+  </p>
+<% end -%>

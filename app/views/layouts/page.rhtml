@@ -6,7 +6,7 @@
       <%= stylesheet_link_tag 'dedawiki' %>
       <%= javascript_include_tag :defaults %>
   </head>
-  <% @onload = "new Ajax.Updater('login', '/page/lgn', {asynchronous:true, evalScripts:true}); return false;" if controller.params[:action] == 'show' -%>
+  <% @onload = "new Ajax.Updater('login', '/page/lgn/#{@title}', {asynchronous:true, evalScripts:true}); return false;" if controller.params[:action] == 'show' -%>
   <body id="<%= @tab -%>" onload="<%= @onload -%>">
 
     <div class="titlebar">

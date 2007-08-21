@@ -379,3 +379,13 @@ span.del {
     text-decoration: line-through;
     background-color: #ffcccc;
 }
+
+p.admin {
+    padding-left: 0;
+    margin-left: 0;
+}
+
+p.admin ul, p.admin li {
+    margin-left: 0;
+    padding-left: 0;
+}

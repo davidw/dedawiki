@@ -4,6 +4,8 @@ class PageController < ApplicationController
 
   caches_page :show
 
+  before_filter(:check_for_spammer, :only => [:edit, :update, :create])
+
   # These methods must not be called with an empty title.
   before_filter(:check_for_empty_title,
                 :only => [:history, :history_diff, :refer,
@@ -66,6 +68,7 @@ class PageController < ApplicationController
   # upper right corner.  It's less work to only do that dynamically
   # rather than create the whole page.
   def lgn
+    @title = title_param
     render(:layout => false)
   end
 
@@ -166,6 +169,7 @@ class PageController < ApplicationController
 
   # Edit a page.
   def edit
+
     @page = Page.find_by_title(title_param)
     if @page.nil?
       redirect_to(:controller => 'page', :action => 'show', :title => 'Home')
@@ -185,10 +189,6 @@ class PageController < ApplicationController
     if params[:revision] && params[:revision][:comment] && params[:revision][:comment].length > 250
       spammer = Spammer.new(:ip => request.remote_ip)
       spammer.save
-    end
-
-    # Add nasty anti spam things...
-    if !spammer.nil? || Spammer.find_by_ip(request.remote_ip)
       redirect_to("http://#{request.remote_ip}")
       return
     end
@@ -217,6 +217,14 @@ class PageController < ApplicationController
 
   private
 
+  def check_for_spammer()
+    # Add nasty anti spam things...
+    if Spammer.find_by_ip(request.remote_ip)
+      redirect_to("http://#{request.remote_ip}")
+      return false
+    end
+  end
+
   # Create a new revision and save it.
   def add_revision(user, page, ip, comment)
     r = Revision.new(:ip => ip, :content => page.content)
@@ -232,14 +240,6 @@ class PageController < ApplicationController
       redirect_to('/')
       return false
     end
-  end
-
-  # Returns the :title param.
-  def title_param
-    t = params[:title]
-    return "" if t.nil?
-    return t if t.class == String
-    return params[:title].join("/")
   end
 
   # Return false if the page *exists*

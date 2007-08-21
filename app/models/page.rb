@@ -1,5 +1,5 @@
 class Page < ActiveRecord::Base
-  has_many :revisions, :order => 'created_at desc'
+  has_many :revisions, :order => 'created_at desc', :dependent => :destroy
   has_many :comments
 
   before_update :regenerate_html

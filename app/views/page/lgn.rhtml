@@ -1,1 +1,14 @@
 <%= login_status -%>
+<% if logged_in? && current_user.admin? -%>
+<p class="admin">
+<strong>Admin:</strong><br/>
+<ul>
+<li>
+<%= link_to("Delete this page as spam", :controller => 'admin', :action => 'delete_spam', :title => @title) -%>
+</li>
+<li>
+<%= link_to("Delete this page", :controller => 'admin', :action => 'delete', :title => @title) -%>
+</li>
+</ul>
+</p>
+<% end -%>
