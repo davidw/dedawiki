@@ -1,3 +1,5 @@
+require 'hpricot'
+
 class PageController < ApplicationController
 
   include Differ
@@ -156,14 +158,12 @@ class PageController < ApplicationController
     end
 
     cachekey = "history-diff-#{@page.id}-#{@old}-#{@new}"
-    cachedata = read_fragment(cachekey)
+    @diff = read_fragment(cachekey)
 
-    if !cachedata
-      @diff = DifferClass.new(Maruku.new(oldcontent).to_html, Maruku.new(newcontent).to_html).diffs
-      cachedata = render(:layout => 'page')
-      write_fragment(cachekey, cachedata)
-    else
-      render(:text => cachedata)
+    if !@diff
+      @diff = Hpricot(DifferClass.new(Maruku.new(oldcontent).to_html,
+                                      Maruku.new(newcontent).to_html).diffs).at('body').inner_html
+      write_fragment(cachekey, @diff)
     end
   end
 
