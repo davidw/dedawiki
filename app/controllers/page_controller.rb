@@ -76,7 +76,7 @@ class PageController < ApplicationController
 
   # Starts the creation of a new page.
   def create
-    @page = Page.new(:title => title_param)
+    @page = Page.new(:title => title_param, :content => Siteinfo.main.template)
   end
 
   # Actually creates a new page.
