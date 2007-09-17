@@ -231,6 +231,7 @@ class PageController < ApplicationController
       urls = content.scan('http://').length
       length = content.length
       if (length.to_f / urls.to_f) > 1.5 && urls >= 5 && !logged_in?
+        logger.warn "Spam caught: #{urls} urls, length #{length}, content: #{content}"
         return false
       end
     end
