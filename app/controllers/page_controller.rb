@@ -223,6 +223,18 @@ class PageController < ApplicationController
       redirect_to("http://#{request.remote_ip}")
       return false
     end
+
+    # It seems spammers put a lot of 'http://' into their pages,
+    # compared with how much actual content goes in.
+    if params[:page] && params[:page][:content]
+      content = params[:page][:content]
+      urls = content.scan('http://').length
+      length = content.length
+      if (length.to_f / urls.to_f) > 1.5 && urls >= 5 && !logged_in?
+        return false
+      end
+    end
+
   end
 
   # Create a new revision and save it.

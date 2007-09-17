@@ -99,6 +99,13 @@ class PageControllerTest < Test::Unit::TestCase
     assert_redirected_to :action => 'dynamicshow', :title => 'Home'
   end
 
+  def test_update_with_spam
+    post(:update, :title => 'Home', :revision => {:comment => 'updated home'},
+         :page => {:content => 'http://foo.com xxx http://foo.com xxx http://foo.com xxx http://foo.com xxx http://foo.com xxx http://foo.com xxx http://foo.com xxx http://foo.com xxx http://foo.com xxx'})
+    assert_response 0
+  end
+
+
   def test_history
     get(:history, :title => 'Home')
     assert_response :success
