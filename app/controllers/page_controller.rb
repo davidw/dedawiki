@@ -6,7 +6,7 @@ class PageController < ApplicationController
 
   caches_page :show
 
-  before_filter(:check_for_spammer, :only => [:edit, :update, :create])
+  before_filter(:check_for_spammer, :only => [:edit, :update, :create, :newpage])
 
   # These methods must not be called with an empty title.
   before_filter(:check_for_empty_title,
