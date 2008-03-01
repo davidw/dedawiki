@@ -5,6 +5,8 @@ class Page < ActiveRecord::Base
   before_update :regenerate_html
   before_save :regenerate_html
 
+  validates_presence_of :title
+
   private
 
   def regenerate_html
