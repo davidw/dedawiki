@@ -3,8 +3,6 @@ class UserpagesController < ApplicationController
   before_filter :login_required, :only => [:editinfo, :update,
                                            :cancel_editinfo, :changepassform, :savenewpass]
 
-  layout 'page'
-
   def index
   end
 

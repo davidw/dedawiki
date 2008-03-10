@@ -2,8 +2,6 @@ class AdminController < ApplicationController
 
   cache_sweeper :page_sweeper, :only => [:delete]
 
-  layout 'page'
-
   before_filter :admin_login_required
 
   def index

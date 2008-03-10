@@ -1,8 +1,6 @@
 class SetupController < ApplicationController
   before_filter :only_setup_once
 
-  layout 'page'
-
   # Displays the initial setup page.
   def index
   end
