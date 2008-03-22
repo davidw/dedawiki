@@ -6,7 +6,7 @@ module ApplicationHelper
     txt.blank? ? "" : Maruku.new(txt).to_html
   end
 
-  def login_status()
+  def login_status
     spacebar = "&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;"
     unless logged_in?
       return link_to("Log in", :controller => 'account', :action => 'login') +

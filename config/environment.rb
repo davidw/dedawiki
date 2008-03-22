@@ -5,7 +5,7 @@
 # ENV['RAILS_ENV'] ||= 'production'
 
 # Specifies gem version of Rails to use when vendor/rails is not present
-RAILS_GEM_VERSION = '1.2.3' unless defined? RAILS_GEM_VERSION
+# RAILS_GEM_VERSION = '1.2.3' unless defined? RAILS_GEM_VERSION
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
@@ -41,8 +41,14 @@ Rails::Initializer.run do |config|
 
   # Make Active Record use UTC-base instead of local time
   # config.active_record.default_timezone = :utc
-  
+
   # See Rails::Configuration for more options
+
+  config.action_controller.session = {
+    :session_key => "_dedawiki_session",
+    :secret => "Some secret phrase full of blah blah so that rails is happy.  Wierd."
+  }
+
 end
 
 # Add new inflection rules using the following format 
@@ -68,3 +74,4 @@ ExceptionNotifier.exception_recipients = %w(davidw@dedasys.com)
 
 ExceptionNotifier.sender_address =
     %("DedaWiki Application Error" <davidw@dedasys.com>)
+
