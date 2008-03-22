@@ -194,6 +194,10 @@ class PageController < ApplicationController
     end
 
     @page = Page.find_by_title(title_param)
+    if @page.nil?
+      redirect_to "/"
+      return
+    end
 
     expire_page(:controller => 'page', :action => 'show', :title => @page.title)
 
