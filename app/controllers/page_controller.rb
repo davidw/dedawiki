@@ -221,7 +221,7 @@ class PageController < ApplicationController
 
   private
 
-  def check_for_spammer()
+  def check_for_spammer
     # Add nasty anti spam things...
     if Spammer.find_by_ip(request.remote_ip)
       redirect_to("http://#{request.remote_ip}")
@@ -236,6 +236,7 @@ class PageController < ApplicationController
       length = content.length
       if (length.to_f / urls.to_f) > 1.5 && urls >= 5 && !logged_in?
         logger.warn "Spam caught: #{urls} urls, length #{length}, content: #{content}"
+        redirect_to("http://#{request.remote_ip}")
         return false
       end
     end

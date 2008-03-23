@@ -100,9 +100,12 @@ class PageControllerTest < Test::Unit::TestCase
   end
 
   def test_update_with_spam
+    oldpage = Page.find_by_title "Home"
     post(:update, :title => 'Home', :revision => {:comment => 'updated home'},
          :page => {:content => 'http://foo.com xxx http://foo.com xxx http://foo.com xxx http://foo.com xxx http://foo.com xxx http://foo.com xxx http://foo.com xxx http://foo.com xxx http://foo.com xxx'})
-    assert_response 0
+    page = Page.find_by_title "Home"
+    assert_equal oldpage.content, page.content
+    assert_redirected_to "/"
   end
 
 
