@@ -1,3 +1,6 @@
   <p>
-    Rolled back <%= @page.title -%> to version <%= @good -%>
+
+Rolled back,
+<%= link_to(@page.title, :controller => 'page', :action => 'show', :id => @book.id) -%>  from version <%= @bad -%> to <%= @good -%>.
+
   </p>

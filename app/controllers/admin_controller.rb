@@ -43,7 +43,7 @@ class AdminController < ApplicationController
   end
 
   # Roll back to an older version.
-  def rollback
+  def rollback_not_spam
     @page = Page.find(params[:id])
     @good = params[:old].to_i
     @bad = @good + 1
@@ -54,15 +54,19 @@ class AdminController < ApplicationController
     @page.content = @goodrev.content
     @page.save
 
-    @spammer = Spammer.new(:ip => @badrev.ip)
-    @spammer.save
-
     @page.revisions.reverse[@bad - 1 .. -1].each do |r|
       logger.info "Destroying revision: #{r.inspect}"
       r.destroy
     end
 
     expire_fragment(/history-diff-#{@page.id}-.*/)
+    expire_page(:controller => 'page', :action => 'show', :title => @page.title)
+  end
+
+  def rollback
+    @spammer = Spammer.new(:ip => @badrev.ip)
+    @spammer.save
+    rollback_not_spam
   end
 
   private

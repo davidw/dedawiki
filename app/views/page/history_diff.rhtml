@@ -3,8 +3,18 @@
 
 <p>
 <% if logged_in? && current_user.admin? %>
-<%= link_to("Roll back to version #{@old}", :controller => 'admin',
-            :action => 'rollback', :id => @page.id, :old => @old) %>
+
+<div class="adminaction">
+    <p>
+      <%= link_to("Spam version - roll back to #{@old}", :controller => 'admin',
+            :action => 'rollback', :id => @page.id, :old => @old) -%>
+    </p>
+
+    <p>
+      <%= link_to("Roll back to version #{@old}", :controller => 'admin',
+                  :action => 'rollback_not_spam', :id => @page.id, :old => @old) -%>
+    </p>
+</div>
 <% end %>
 </p>
 

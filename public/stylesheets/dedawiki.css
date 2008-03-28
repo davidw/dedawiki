@@ -389,3 +389,9 @@ p.admin ul, p.admin li {
     margin-left: 0;
     padding-left: 0;
 }
+
+div.adminaction {
+    border: 1px solid red;
+    padding: 1ex;
+    background-color: #ffffcc;
+}
