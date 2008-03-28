@@ -167,7 +167,7 @@ class PageController < ApplicationController
                                         Maruku.new(newcontent, attrs).to_html).diffs).at('body').inner_html
         write_fragment(cachekey, @diff)
       rescue => err
-        @diff = "Maruku Error: #{err}"
+        @diff = "Maruku Error: <pre>\n#{err}\n</pre>"
       end
     end
   end
