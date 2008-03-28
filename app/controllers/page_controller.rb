@@ -162,8 +162,9 @@ class PageController < ApplicationController
 
     if !@diff
       begin
-        @diff = Hpricot(DifferClass.new(Maruku.new(oldcontent).to_html,
-                                        Maruku.new(newcontent).to_html).diffs).at('body').inner_html
+        attrs = {:on_error => :raise}
+        @diff = Hpricot(DifferClass.new(Maruku.new(oldcontent, attrs).to_html,
+                                        Maruku.new(newcontent, attrs).to_html).diffs).at('body').inner_html
         write_fragment(cachekey, @diff)
       rescue => err
         @diff = "Maruku Error: #{err}"
