@@ -44,6 +44,9 @@ class AdminController < ApplicationController
 
   # Roll back to an older version.
   def rollback_not_spam
+    # Used in the spam rollback
+    @ips = []
+
     @page = Page.find(params[:id])
     @good = params[:old].to_i
     @bad = @good + 1
@@ -55,6 +58,7 @@ class AdminController < ApplicationController
     @page.save
 
     @page.revisions.reverse[@bad - 1 .. -1].each do |r|
+      @ips << r.ip
       logger.info "Destroying revision: #{r.inspect}"
       r.destroy
     end
@@ -64,9 +68,11 @@ class AdminController < ApplicationController
   end
 
   def rollback
-    @spammer = Spammer.new(:ip => @badrev.ip)
-    @spammer.save
     rollback_not_spam
+    @ips.each do |ip|
+      @spammer = Spammer.new(:ip => ip)
+      @spammer.save
+    end
   end
 
   private
