@@ -80,7 +80,7 @@ class AdminController < ApplicationController
   # Make sure the user is an admin.
   def admin_login_required
     if !logged_in? || !current_user.admin?
-      redirect_to :controller => 'account', :action => 'signup'
+      redirect_to :controller => 'account', :action => 'login'
       return false
     end
   end
