@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 24) do
+ActiveRecord::Schema.define(:version => 26) do
 
   create_table "comments", :force => true do |t|
     t.text     "content"
@@ -39,6 +39,9 @@ ActiveRecord::Schema.define(:version => 24) do
     t.integer  "addchars"
     t.integer  "delchars"
     t.string   "comment"
+    t.boolean  "spam"
+    t.integer  "spaminess"
+    t.boolean  "confirmed"
   end
 
   create_table "siteinfos", :force => true do |t|

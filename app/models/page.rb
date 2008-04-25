@@ -7,6 +7,11 @@ class Page < ActiveRecord::Base
 
   validates_presence_of :title
 
+  # Get all revisions that aren't spam.
+  def non_spam_revisions
+    self.revisions.find(:all, :conditions => 'not spam')
+  end
+
   private
 
   def regenerate_html

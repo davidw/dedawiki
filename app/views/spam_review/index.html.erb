@@ -1,0 +1,45 @@
+<% @title = "DedaWiki Spam Review" -%>
+
+  <p>
+    <%= link_to("View <b>all</b> revisions", :action => 'index', :all => true) %>
+  </p>
+
+  <% form_tag(:action => 'classify') do %>
+
+  <% @revisions.each do |rev| %>
+
+
+  Title: <label><%=h rev.page.title -%></label>
+
+  <div style="float: left;">
+  <p>
+    Spaminess: <%= rev.spaminess -%>
+  </p>
+  <p>
+    <%= check_box_tag 'revid[]', rev.id, rev.spam -%>
+  </p>
+  </div>
+  <div style="float: left;">
+  <%= text_area_tag 'content', rev.content, :size => '80x10' -%>
+  </div>
+
+  <br style="clear:both;"/>
+
+
+    <% end %>
+
+    <hr style="clear:both;"/>
+
+      <p>
+  <%= submit_tag "Confirm Classification", :name => 'confirm' -%>
+      </p>
+
+      <p>
+  <%= submit_tag "Mark Checked as Spam", :name => 'spam' -%>
+      </p>
+
+      <p>
+  <%= submit_tag "Mark Checked as Ham", :name => 'ham' -%>
+      </p>
+
+      <% end %>

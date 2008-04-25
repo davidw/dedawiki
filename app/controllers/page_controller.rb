@@ -44,7 +44,7 @@ class PageController < ApplicationController
 
     @authors = {}
     addtotal = 0
-    @page.revisions.each do |r|
+    @page.non_spam_revisions.each do |r|
       addtotal += r.addchars unless r.addchars.nil?
       @authors[r.user] ||= 0
       @authors[r.user] += r.addchars unless r.addchars.nil?
@@ -83,8 +83,15 @@ class PageController < ApplicationController
   def newpage
     @page = Page.new(params[:page])
     if @page.save
-      add_revision(current_user, @page, request.remote_ip,
-                   params[:revision][:comment])
+      r = add_revision(current_user, @page, request.remote_ip,
+                       params[:revision][:comment])
+
+      # FIXME - I'm not sure what we should do here.  It's a new page,
+      # so for the moment I guess we'll just leave it blank.
+      if r.spam?
+        @page.content = ""
+      end
+
       flash[:notice] = "#{@page.title} saved"
 
     end
@@ -93,7 +100,7 @@ class PageController < ApplicationController
 
   # Show recently updated pages
   def recent
-    @revisions = Revision.find_by_sql("select * from revisions where id in (select max(id) from revisions group by page_id) order by id desc limit 20");
+    @revisions = Revision.find_by_sql("select * from revisions where id in (select max(id) from revisions where not spam group by page_id) order by id desc limit 20");
   end
 
   # Atom feed of recent changes.
@@ -119,14 +126,14 @@ class PageController < ApplicationController
     end
 
     if params[:revision].nil?
-      @revision = @page.revisions.length
+      @revision = @page.non_spam_revisions.length
     else
       @revision = params[:revision].to_i
     end
-    if @page.revisions.reverse[@revision - 1].nil?
+    if @page.non_spam_revisions.reverse[@revision - 1].nil?
       @revision_content = ""
     else
-      @revision_content = @page.revisions.reverse[@revision - 1].content
+      @revision_content = @page.non_spam_revisions.reverse[@revision - 1].content
     end
   end
 
@@ -144,15 +151,15 @@ class PageController < ApplicationController
     @old = params[:older].to_i
     @new = params[:newer].to_i
 
-    if @old > @page.revisions.length || @new < 0 || @new > @page.revisions.length
+    if @old > @page.non_spam_revisions.length || @new < 0 || @new > @page.non_spam_revisions.length
       render(:file => "#{RAILS_ROOT}/public/404.html",
              :status => '404 Not Found')
       return
     end
 
-    newcontent = @page.revisions.reverse[@new - 1].content
+    newcontent = @page.non_spam_revisions.reverse[@new - 1].content
     if @old > 0
-      oldcontent = @page.revisions.reverse[@old - 1].content
+      oldcontent = @page.non_spam_revisions.reverse[@old - 1].content
     else
       oldcontent = ""
     end
@@ -204,11 +211,19 @@ class PageController < ApplicationController
       return
     end
 
+    # Clean out the cache.
     expire_page(:controller => 'page', :action => 'show', :title => @page.title)
 
+    # Save the old page in case the new one is spam.
+    oldpage = @page.clone
+
     if @page.update_attributes(params[:page])
-      add_revision(current_user, @page, request.remote_ip,
-                   params[:revision][:comment])
+      r = add_revision(current_user, @page, request.remote_ip,
+                       params[:revision][:comment])
+      if r.spam?
+        @page = oldpage
+      end
+
       flash[:notice] = 'The page has been updated.'
       redirect_to :action => 'dynamicshow', :title => @page.title
     else
@@ -227,23 +242,10 @@ class PageController < ApplicationController
   private
 
   def check_for_spammer
-    # Add nasty anti spam things...
+    # Only check for IP.  Other spam is caught by the filter.
     if Spammer.find_by_ip(request.remote_ip)
       redirect_to("http://#{request.remote_ip}")
       return false
-    end
-
-    # It seems spammers put a lot of 'http://' into their pages,
-    # compared with how much actual content goes in.
-    if params[:page] && params[:page][:content]
-      content = params[:page][:content]
-      urls = content.scan('http://').length
-      length = content.length
-      if (length.to_f / urls.to_f) > 1.5 && urls >= 5 && !logged_in?
-        logger.warn "Spam caught: #{urls} urls, length #{length}, content: #{content}"
-        redirect_to("http://#{request.remote_ip}")
-        return false
-      end
     end
 
   end
@@ -254,7 +256,16 @@ class PageController < ApplicationController
     r.user = user
     r.page = page
     r.comment = comment
+
+    # Ok, let's run a spam test.
+    sf = SpamFilter.instance
+    res = sf.check(r, :content, :ip, :comment)
+
+    r.confirmed = false
+    r.spam = res.spam
+    r.spaminess = res.spaminess
     r.save!
+    return r
   end
 
   # Check and make sure the title isn't empty.
