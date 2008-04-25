@@ -1,0 +1,21 @@
+SpamFilter
+==========
+
+SpamFilter is a generic spam filter class, meant to act as a facade
+for specific implementations that can be hooked in.
+
+=== Installation
+
+This depends on which filter you use.  See for instance README.sa for
+the SpamAssassin plugin.
+
+Example
+=======
+
+  sf = SpamFilter.new
+  
+
+
+
+Copyright (c) 2008 DedaSys LLC - www.dedasys.com, released under the
+Apache License
