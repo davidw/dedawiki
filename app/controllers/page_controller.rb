@@ -100,7 +100,7 @@ class PageController < ApplicationController
 
   # Show recently updated pages
   def recent
-    @revisions = Revision.find_by_sql("select * from revisions where id in (select max(id) from revisions where not spam group by page_id) order by id desc limit 20");
+    @revisions = Revision.find_by_sql("select * from revisions where id in (select max(id) from revisions where spam is not true group by page_id) order by id desc limit 20");
   end
 
   # Atom feed of recent changes.
