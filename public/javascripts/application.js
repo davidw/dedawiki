@@ -39,3 +39,12 @@ function markdownpopup() {
    }
    return false;
 }
+
+function check_all(checkbox) {
+    var form = checkbox.form, z = 0;
+    for(z=0; z<form.length;z++){
+	if(form[z].type == 'checkbox' && form[z].name != 'checkall'){
+	    form[z].checked = checkbox.checked;
+	}
+    }
+}

@@ -8,7 +8,6 @@
 
   <% @revisions.each do |rev| %>
 
-
   Title: <label><%=h rev.page.title -%></label>
 
   <div style="float: left;">
@@ -29,6 +28,10 @@
     <% end %>
 
     <hr style="clear:both;"/>
+
+  <p>
+    Select <b>all</b>: <input id="selectall" type="checkbox" onclick="check_all(this)">
+  </p>
 
       <p>
   <%= submit_tag "Confirm Classification", :name => 'confirm' -%>
