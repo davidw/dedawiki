@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 26) do
+ActiveRecord::Schema.define(:version => 27) do
 
   create_table "comments", :force => true do |t|
     t.text     "content"
@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(:version => 26) do
     t.integer  "delchars"
     t.string   "comment"
     t.boolean  "spam"
-    t.integer  "spaminess"
+    t.float    "spaminess"
     t.boolean  "confirmed"
   end
 
