@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 27) do
+ActiveRecord::Schema.define(:version => 28) do
 
   create_table "comments", :force => true do |t|
     t.text     "content"
@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(:version => 27) do
     t.boolean "setup",             :default => false
     t.string  "email"
     t.boolean "frontpagecomments"
+    t.boolean "allowanonymous"
   end
 
   create_table "spammers", :force => true do |t|

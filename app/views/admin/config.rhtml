@@ -30,6 +30,12 @@
   </p>
 
   <p>
+    <label for="siteinfo_allowanonymous">Allow anonymous users to edit pages?</label><br/>
+    <small>Allow anonymous, non-logged in users to edit pages?</small><br/>
+    <%= f.check_box(:allowanonymous) %>
+  </p>
+
+  <p>
     <label for="siteinfo_template">Default template</label><br/>
     <small>This is the default template for new pages.</small><br/>
     <%= f.text_area(:template) %>

@@ -38,4 +38,9 @@ class Siteinfo < ActiveRecord::Base
     return Siteinfo.find(:first).frontpagecomments?
   end
 
+  # Are comments allowed on the front page?
+  def Siteinfo.allowanonymous?
+    return Siteinfo.find(:first).allowanonymous?
+  end
+
 end

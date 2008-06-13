@@ -2,6 +2,8 @@ require 'hpricot'
 
 class PageController < ApplicationController
 
+  @@allow_anonymous = Siteinfo.allowanonymous?
+
   include Differ
 
   caches_page :show
@@ -241,7 +243,15 @@ class PageController < ApplicationController
 
   private
 
+  # Perhaps the name should be changed, as we also check for logged-in
+  # users if that option is set in the admin panel.
   def check_for_spammer
+    if !@@allow_anonymous && !logged_in?
+      flash[:notice] = 'You must be logged in to make changes'
+      redirect_to(:controller => 'account', :action => 'signup')
+      return false
+    end
+
     # Only check for IP.  Other spam is caught by the filter.
     if Spammer.find_by_ip(request.remote_ip)
       redirect_to("http://#{request.remote_ip}")
