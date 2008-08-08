@@ -5,7 +5,7 @@ require 'account_controller'
 class AccountController; def rescue_action(e) raise e end; end
 
 class AccountControllerTest < Test::Unit::TestCase
-  fixtures :users
+  fixtures :users, :siteinfos
 
   def setup
     @controller = AccountController.new
@@ -68,11 +68,6 @@ class AccountControllerTest < Test::Unit::TestCase
     assert_not_nil @response.cookies["auth_token"]
   end
 
-  def test_should_not_remember_me
-    post :login, :login => 'quentin', :password => 'test', :remember_me => "0"
-    assert_nil @response.cookies["auth_token"]
-  end
-  
   def test_should_delete_token_on_logout
     login_as :quentin
     get :logout

@@ -1,11 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require 'page_controller'
-
-# Re-raise errors caught by the controller.
-class PageController; def rescue_action(e) raise e end; end
 
 class PageControllerTest < Test::Unit::TestCase
-  fixtures :pages, :users, :revisions
+  fixtures :pages, :users, :revisions, :siteinfos
 
   def setup
     @controller = PageController.new
@@ -13,9 +9,9 @@ class PageControllerTest < Test::Unit::TestCase
     @response   = ActionController::TestResponse.new
 
     @first_id = pages(:first).id
-    siteinfo = Siteinfo.new(:name => "Test Wiki", :tagline => 'A wiki to test', :setup => true)
+    siteinfo = Siteinfo.new(:name => "Test Wiki", :tagline => 'A wiki to test',
+                            :setup => true, :allowanonymous => true)
     siteinfo.save
-
   end
 
   def test_index
@@ -99,23 +95,13 @@ class PageControllerTest < Test::Unit::TestCase
     assert_redirected_to :action => 'dynamicshow', :title => 'Home'
   end
 
-  def test_update_with_spam
-    oldpage = Page.find_by_title "Home"
-    post(:update, :title => 'Home', :revision => {:comment => 'updated home'},
-         :page => {:content => 'http://foo.com xxx http://foo.com xxx http://foo.com xxx http://foo.com xxx http://foo.com xxx http://foo.com xxx http://foo.com xxx http://foo.com xxx http://foo.com xxx'})
-    page = Page.find_by_title "Home"
-    assert_equal oldpage.content, page.content
-    assert_redirected_to "/"
-  end
-
-
   def test_history
     get(:history, :title => 'Home')
     assert_response :success
   end
 
   def test_history_diff
-    get(:history_diff, :title => 'Home', :older => 0, :newer => 1)
+    get(:history_diff, :title => 'Home', :older => 1, :newer => 2)
     assert_response :success
   end
 

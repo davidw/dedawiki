@@ -3,3 +3,4 @@ main:
   id: 1
   name: DedaWiki
   tagline: DedaWiki Tagline
+  allowanonymous: true
