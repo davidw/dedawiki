@@ -29,5 +29,3 @@ class SpamFilterSpamc < SpamFilter
 
 end
 
-# Default!
-SpamFilter.kind = SpamFilterSpamc
