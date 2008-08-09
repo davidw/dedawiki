@@ -30,4 +30,16 @@
     <label for="revision_comment">Describe your changes</label><br/>
       <%= text_field 'revision', 'comment', :size => 70 %>
   </p>
+
+  <p>
+    <%# This might change in the future to be randomly generated: -%>
+    <% op = "plus" -%>
+    <% num1 = (rand * 10).to_i -%>
+    <% num2 = (rand * 10).to_i -%>
+    <% question = "#{num1} #{op} #{num2}" -%>
+    <label for="question">Anti-spam question: what is <%= "<span>#{num1}</span> <span>#{op}</span> <span>#{num2}</span>" -%>?</label><br/>
+    <%= hidden_field_tag 'question', question -%>
+    <%= text_field_tag 'answer' -%>
+  </p>
+
   <!--[eoform:page]-->

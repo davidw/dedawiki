@@ -27,3 +27,4 @@ class SpamFilter
 end
 
 require 'spam_filter_spamc'
+require 'spam_filter_none'

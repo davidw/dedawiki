@@ -207,9 +207,22 @@ class PageController < ApplicationController
       return
     end
 
+
+    question = params[:question] || ""
+    answer = params[:answer] || ""
+
     @page = Page.find_by_title(title_param)
     if @page.nil?
       redirect_to "/"
+      return
+    end
+
+    # 
+    num1, op, num2 = question.split
+    if answer.to_i != (num1.to_i + num2.to_i)
+      @page.content = params[:page][:content]
+      @revision = Revision.new(:comment => params[:revision][:comment])
+      render :action => 'edit'
       return
     end
 
@@ -268,12 +281,12 @@ class PageController < ApplicationController
     r.comment = comment
 
     # Ok, let's run a spam test.
-    sf = SpamFilter.instance
-    res = sf.check(r, :content, :ip, :comment)
+     sf = SpamFilter.instance
+     res = sf.check(r, :content, :ip, :comment)
 
-    r.confirmed = false
-    r.spam = res.spam
-    r.spaminess = res.spaminess
+     r.confirmed = false
+     r.spam = res.spam
+     r.spaminess = res.spaminess
     r.save!
     return r
   end
