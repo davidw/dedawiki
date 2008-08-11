@@ -217,9 +217,9 @@ class PageController < ApplicationController
       return
     end
 
-    # 
+    # Answer needed for anti spam thing.
     num1, op, num2 = question.split
-    if answer.to_i != (num1.to_i + num2.to_i)
+    if answer == "" || question == "" || answer.to_i != (num1.to_i + num2.to_i)
       @page.content = params[:page][:content]
       @revision = Revision.new(:comment => params[:revision][:comment])
       render :action => 'edit'
