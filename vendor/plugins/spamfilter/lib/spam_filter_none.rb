@@ -6,7 +6,6 @@ class SpamFilterNone < SpamFilter
   include SpamAssassin
 
   def initialize()
-    @filter = SpamC.new
   end
 
   def check(obj, *fields)

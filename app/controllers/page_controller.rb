@@ -1,9 +1,6 @@
 require 'hpricot'
 
 class PageController < ApplicationController
-
-  @@allow_anonymous = Siteinfo.allowanonymous?
-
   include Differ
 
   caches_page :show
@@ -259,7 +256,7 @@ class PageController < ApplicationController
   # Perhaps the name should be changed, as we also check for logged-in
   # users if that option is set in the admin panel.
   def check_for_spammer
-    if !@@allow_anonymous && !logged_in?
+    if !Siteinfo.allowanonymous? && !logged_in?
       flash[:notice] = 'You must be logged in to make changes'
       redirect_to(:controller => 'account', :action => 'signup')
       return false
