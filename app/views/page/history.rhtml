@@ -8,9 +8,10 @@
   </div>
 
 <ul>
-<% i = @page.revisions.length %>
-<% @page.revisions.each do |r| %>
-<% rev = @page.revisions.reverse[i - 1] %>
+<% revisions = @page.non_spam_revisions %>
+<% i = revisions.length %>
+<% revisions.each do |r| %>
+<% rev = revisions.reverse[i - 1] %>
 <li>
 <%= link_to("##{i}", :title => @page.title, :revision => i) %>
       - <%= rev.updated_at.to_s -%>

@@ -150,7 +150,8 @@ class PageController < ApplicationController
     @old = params[:older].to_i
     @new = params[:newer].to_i
 
-    if @old > @page.non_spam_revisions.length || @new < 0 || @new > @page.non_spam_revisions.length
+    if ( @old == 0 && @new == 0 ) || @old > @page.non_spam_revisions.length ||
+        @new < 0 || @new > @page.non_spam_revisions.length
       render(:file => "#{RAILS_ROOT}/public/404.html",
              :status => '404 Not Found')
       return
@@ -216,7 +217,7 @@ class PageController < ApplicationController
 
     # Answer needed for anti spam thing.
     num1, op, num2 = question.split
-    if answer == "" || question == "" || answer.to_i != (num1.to_i + num2.to_i)
+    if answer == "" || question == "" || answer.to_i != (num1.to_i + num2.to_i) || !params[:revision]
       @page.content = params[:page][:content]
       @revision = Revision.new(:comment => params[:revision][:comment])
       render :action => 'edit'
