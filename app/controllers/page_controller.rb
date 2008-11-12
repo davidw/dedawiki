@@ -205,7 +205,6 @@ class PageController < ApplicationController
       return
     end
 
-
     question = params[:question] || ""
     answer = params[:answer] || ""
 
@@ -219,7 +218,8 @@ class PageController < ApplicationController
     num1, op, num2 = question.split
     if answer == "" || question == "" || answer.to_i != (num1.to_i + num2.to_i) || !params[:revision]
       @page.content = params[:page][:content]
-      @revision = Revision.new(:comment => params[:revision][:comment])
+
+      @revision = Revision.new(params[:revision])
       render :action => 'edit'
       return
     end

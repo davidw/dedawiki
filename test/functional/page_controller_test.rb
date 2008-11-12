@@ -88,10 +88,22 @@ class PageControllerTest < Test::Unit::TestCase
     assert_redirected_to :action => 'show', :title => 'Home'
   end
 
-  def test_update
+  def test_update_no_answer
     post(:update, :title => 'Home', :revision => {:comment => 'updated home'},
          :page => {:content => 'new improved home'})
-    assert_response :redirect
+    assert_template 'edit'
+  end
+
+  def test_update_no_comment
+    post(:update, :title => 'Home', :page => {:content => 'new improved home'})
+    assert_template 'edit'
+  end
+
+  def test_update
+    post(:update, :title => 'Home', :revision => {:comment => 'updated home'},
+         :page => {:content => 'new improved home'},
+         :question => '40 plus 2',
+         :answer => 42)
     assert_redirected_to :action => 'dynamicshow', :title => 'Home'
   end
 
