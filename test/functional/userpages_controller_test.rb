@@ -1,10 +1,6 @@
-require File.dirname(__FILE__) + '/../test_helper'
-require 'userpages_controller'
+require 'test_helper'
 
-# Re-raise errors caught by the controller.
-class UserpagesController; def rescue_action(e) raise e end; end
-
-class UserpagesControllerTest < Test::Unit::TestCase
+class UserpagesControllerTest < ActionController::TestCase
   def setup
     @controller = UserpagesController.new
     @request    = ActionController::TestRequest.new

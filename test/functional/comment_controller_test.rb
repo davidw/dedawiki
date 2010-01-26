@@ -1,10 +1,6 @@
-require File.dirname(__FILE__) + '/../test_helper'
-require 'comment_controller'
+require 'test_helper'
 
-# Re-raise errors caught by the controller.
-class CommentController; def rescue_action(e) raise e end; end
-
-class CommentControllerTest < Test::Unit::TestCase
+class CommentControllerTest < ActionController::TestCase
   fixtures :comments, :users, :pages, :siteinfos
 
   def setup

@@ -1,6 +1,6 @@
-require File.dirname(__FILE__) + '/../test_helper'
+require 'test_helper'
 
-class PageControllerTest < Test::Unit::TestCase
+class PageControllerTest < ActionController::TestCase
   fixtures :pages, :users, :revisions, :siteinfos
 
   def setup
@@ -102,8 +102,8 @@ class PageControllerTest < Test::Unit::TestCase
   def test_update
     post(:update, :title => 'Home', :revision => {:comment => 'updated home'},
          :page => {:content => 'new improved home'},
-         :question => '40 plus 2',
-         :answer => 42)
+         :spamquestion => '40 plus 2',
+         :spamanswer => 42)
     assert_redirected_to :action => 'dynamicshow', :title => 'Home'
   end
 
