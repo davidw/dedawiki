@@ -205,8 +205,8 @@ class PageController < ApplicationController
       return
     end
 
-    question = params[:question] || ""
-    answer = params[:answer] || ""
+    question = params[:spamquestion] || ""
+    answer = params[:spamanswer] || ""
 
     @page = Page.find_by_title(title_param)
     if @page.nil?

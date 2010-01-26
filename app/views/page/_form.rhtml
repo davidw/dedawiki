@@ -37,9 +37,9 @@
     <% num1 = (rand * 10).to_i -%>
     <% num2 = (rand * 10).to_i -%>
     <% question = "#{num1} #{op} #{num2}" -%>
-    <label for="question">Anti-spam question: what is <%= "<span>#{num1}</span> <span>#{op}</span> <span>#{num2}</span>" -%>?</label><br/>
-    <%= hidden_field_tag 'question', question -%>
-    <%= text_field_tag 'answer' -%>
+    <label for="spamquestion">Anti-spam question: what is <%= "<span>#{num1}</span> <span>#{op}</span> <span>#{num2}</span>" -%>?</label><br/>
+    <%= hidden_field_tag 'spamquestion', question -%>
+    <%= text_field_tag 'spamanswer' -%>
   </p>
 
   <!--[eoform:page]-->
