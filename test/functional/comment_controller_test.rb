@@ -3,6 +3,8 @@ require 'test_helper'
 class CommentControllerTest < ActionController::TestCase
   fixtures :comments, :users, :pages, :siteinfos
 
+  include AuthenticatedTestHelper
+
   def setup
     @controller = CommentController.new
     @request    = ActionController::TestRequest.new

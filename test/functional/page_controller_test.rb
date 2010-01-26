@@ -46,7 +46,7 @@ class PageControllerTest < ActionController::TestCase
     post :create, :title => 'Home'
 
     assert_response :redirect
-    assert_redirected_to :action => 'show', :title => 'Home'
+    assert_redirected_to '/page/show/Home'
   end
 
   def test_newpage_existing_page
@@ -85,7 +85,7 @@ class PageControllerTest < ActionController::TestCase
     get :edit, :title => 'WiggleWaggle'
 
     assert_response :redirect
-    assert_redirected_to :action => 'show', :title => 'Home'
+    assert_redirected_to '/page/show/Home'
   end
 
   def test_update_no_answer

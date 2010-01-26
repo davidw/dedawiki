@@ -3,6 +3,8 @@ require 'test_helper'
 class AccountControllerTest < ActionController::TestCase
   fixtures :users, :siteinfos
 
+  include AuthenticatedTestHelper
+
   def setup
     @controller = AccountController.new
     @request    = ActionController::TestRequest.new
@@ -22,14 +24,14 @@ class AccountControllerTest < ActionController::TestCase
   end
 
   def test_should_allow_signup
-    assert_difference User, :count do
+    assert_difference 'User.count' do
       create_user
       assert_response :redirect
     end
   end
 
   def test_should_require_login_on_signup
-    assert_no_difference User, :count do
+    assert_no_difference 'User.count' do
       create_user(:login => nil)
       assert assigns(:user).errors.on(:login)
       assert_response :success
@@ -37,7 +39,7 @@ class AccountControllerTest < ActionController::TestCase
   end
 
   def test_should_require_password_confirmation_on_signup
-    assert_no_difference User, :count do
+    assert_no_difference 'User.count' do
       create_user(:password_confirmation => nil)
       assert assigns(:user).errors.on(:password_confirmation)
       assert_response :success
@@ -45,7 +47,7 @@ class AccountControllerTest < ActionController::TestCase
   end
 
   def test_should_require_email_on_signup
-    assert_no_difference User, :count do
+    assert_no_difference 'User.count' do
       create_user(:email => nil)
       assert assigns(:user).errors.on(:email)
       assert_response :success
@@ -67,7 +69,7 @@ class AccountControllerTest < ActionController::TestCase
   def test_should_delete_token_on_logout
     login_as :quentin
     get :logout
-    assert_equal @response.cookies["auth_token"], []
+    assert_equal cookies["auth_token"], nil
   end
 
   def test_should_login_with_cookie
