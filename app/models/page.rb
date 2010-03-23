@@ -9,7 +9,7 @@ class Page < ActiveRecord::Base
 
   # Get all revisions that aren't spam.
   def non_spam_revisions
-    self.revisions.find(:all, :conditions => 'not spam')
+    self.revisions
   end
 
   private
